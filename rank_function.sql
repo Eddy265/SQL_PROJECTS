@@ -6,6 +6,13 @@
     --DENSE_RANK()
     --NTILE()
 
+--In the SQL RANK functions, we use the OVER() clause to define a set of rows in the result set. 
+--We can also use SQL PARTITION BY clause to define a subset of data in a partition. You can also 
+--use Order by clause to sort the results in a descending or ascending order.
+
+--Before we explore these SQL RANK functions, let’s prepare sample data. In this sample data, we 
+--have exam results for three students in Maths, Science and English subjects.
+
 --CREATE THE DATABASE
 CREATE TABLE ExamResult
 (StudentName VARCHAR(70), 
