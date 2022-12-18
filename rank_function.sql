@@ -1,19 +1,20 @@
---Overview of SQL RANK functions
+/*Overview of SQL RANK functions
 
---We have the following rank functions.
-    --ROW_NUMBER()
-    --RANK()
-    --DENSE_RANK()
-    --NTILE()
+We have the following rank functions.
+    ROW_NUMBER()
+    RANK()
+    DENSE_RANK()
+    NTILE()
 
---In the SQL RANK functions, we use the OVER() clause to define a set of rows in the result set. 
---We can also use SQL PARTITION BY clause to define a subset of data in a partition. You can also 
---use Order by clause to sort the results in a descending or ascending order.
+In the SQL RANK functions, we use the OVER() clause to define a set of rows in the result set. 
+We can also use SQL PARTITION BY clause to define a subset of data in a partition. You can also 
+use Order by clause to sort the results in a descending or ascending order.
 
---Before we explore these SQL RANK functions, let’s prepare sample data. In this sample data, we 
---have exam results for three students in Maths, Science and English subjects.
+Before we explore these SQL RANK functions, let’s prepare sample data. In this sample data, we 
+have exam results for three students in Maths, Science and English subjects.
 
---CREATE THE DATABASE
+CREATE THE DATABASE*/
+
 CREATE TABLE ExamResult
 (StudentName VARCHAR(70), 
  Subject     VARCHAR(20), 
@@ -75,8 +76,9 @@ VALUES
 );
 
 
---RANK()
-    --Partition
+/*RANK()
+    Partition*/
+
 SELECT Studentname, 
        Subject, 
        Marks, 
@@ -160,11 +162,11 @@ FROM ExamResult
 ORDER BY subject, rank;
 
 
---Practical usage of SQL RANK functions
---
---Suppose we want to get the data of the students from ranks 1 to 3. In the following query, 
---we use common table expressions(CTE) to get data using ROW_NUMBER() function and later filtered 
---the result from CTE to satisfy our condition.
+/*Practical usage of SQL RANK functions
+
+Suppose we want to get the data of the students from ranks 1 to 3. In the following query, 
+we use common table expressions(CTE) to get data using ROW_NUMBER() function and later filtered 
+the result from CTE to satisfy our condition.*/
 
 WITH StudentRanks AS
 (
