@@ -1,3 +1,8 @@
+select * from address where userid = 1;
+
+SELECT tablename FROM pg_catalog.pg_tables WHERE 
+schemaname = 'public';
+
 WILDCARDS
 
 --POSTGRESQL WILDCARDS---
@@ -5,19 +10,20 @@ WILDCARDS
 select * from users;
 
 --Select name, phoneNumber, userid from users table where name starts with the letter "E".
-Select name, phoneNumber, userid from users where name like 'E%'
+Select user_name, phoneNumber, userid from users where user_name like 'E%'
 
 --Select name, phoneNumber, userid from users table where name ends with the letter "a".
-Select name, phoneNumber, userid from users where name like '%a';
+Select user_name, phoneNumber, userid from users where user_name like '%a';
 
 --Select name, phoneNumber, userid from users table where name contains the letter "f".
-Select name, phoneNumber, userid from users where name like '%f%';
+Select user_name, phoneNumber, userid from users where user_name like '%f%';
 
 --Select name, phoneNumber, userid from users table where name starts with letter "G" and ends with the letter "e".
-Select name, phoneNumber, userid from users where name like 'G%e';
+Select user_name, phoneNumber, userid from users where user_name like 'G%e';
 
---Select name, phoneNumber, userid from users table where name does NOT start with letters A,C,S,T,G,H,R.
-Select name, phoneNumber, userid from users where name not similar to '[ACSTGHR]%';
+--Select name, phoneNuSELECT tablename FROM pg_catalog.pg_tables WHERE 
+schemaname = 'public';select * from address where userid = 1;Select user_name, phoneNumber, userid from users where user_name not similar to '[ACSTGHR]%';select * from addressmber, userid from users table where name does NOT start with letters A,C,S,T,G,H,R.
+Select user_name, phoneNumber, userid from users where user_name not similar to '[ACSTGHR]%';
 
 --Select userid,name,city from address table where the second letter of the City is an "a".
  select userid,name,city from address where city like '_a%';
@@ -44,4 +50,3 @@ select * from payment where ordernumber::text similar to '5_______'
 
 --select all records from payment table where the ordernumber ends with 31
 select * from payment where ordernumber::text similar to '______31'
-
