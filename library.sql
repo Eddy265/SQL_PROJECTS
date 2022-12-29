@@ -281,12 +281,22 @@ SELECT * FROM tbl_publisher
 
 
 /*Exercises*/
-/* #1- How many copies of the book titled "The Lost Tribe" are owned by the library branch whose name is "Sharpstown"? */
+/* No 1- How many copies of the book titled "The Lost Tribe" are owned by the library branch whose name is "Sharpstown"? */
 
-with ex_1 as (SELECT copies.book_copies_BranchID AS Branch_ID, branch.library_branch_BranchName AS Branch_Name,
+with number1 as (SELECT copies.book_copies_BranchID AS Branch_ID, branch.library_branch_BranchName AS Branch_Name,
 	   copies.book_copies_No_Of_Copies,
 	   book.book_Title AS Book_Title
 	   FROM tbl_book_copies AS copies
 			INNER JOIN tbl_book AS book ON copies.book_copies_BookID = book.book_BookID
 			INNER JOIN tbl_library_branch AS branch ON book_copies_BranchID = branch.library_branch_BranchID)
-select * from ex_1 where book_title = 'The Lost Tribe' and branch_name = 'Sharpstown'
+select * from number1 where book_title = 'The Lost Tribe' and branch_name = 'Sharpstown'
+
+
+/* No 2- How many copies of the book titled "The Lost Tribe" are owned by each library branch? */
+with number2 as (SELECT copies.book_copies_BranchID AS Branch_ID, branch.library_branch_BranchName AS Branch_Name,
+	   copies.book_copies_No_Of_Copies,
+	   book.book_Title AS Book_Title
+	   FROM tbl_book_copies AS copies
+			INNER JOIN tbl_book AS book ON copies.book_copies_BookID = book.book_BookID
+			INNER JOIN tbl_library_branch AS branch ON book_copies_BranchID = branch.library_branch_BranchID)
+select * from number2 where book_title = 'The Lost Tribe'
