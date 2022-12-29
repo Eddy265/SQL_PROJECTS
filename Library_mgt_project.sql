@@ -246,7 +246,7 @@ INSERT INTO tbl_book_copies
 		('19','4','5'),
 		('20','4','5');
 
-	SELECT * FROM tbl_book_copies
+SELECT * FROM tbl_book_copies
  
 
 INSERT INTO tbl_book_authors
@@ -300,3 +300,10 @@ with number2 as (SELECT copies.book_copies_BranchID AS Branch_ID, branch.library
 			INNER JOIN tbl_book AS book ON copies.book_copies_BookID = book.book_BookID
 			INNER JOIN tbl_library_branch AS branch ON book_copies_BranchID = branch.library_branch_BranchID)
 select * from number2 where book_title = 'The Lost Tribe'
+
+/* No 3- Retrieve the names of all borrowers who do not have any books checked out. */
+		
+SELECT borrower_BorrowerName, borrower_CardNo FROM tbl_borrower
+	WHERE NOT EXISTS
+		(SELECT * FROM tbl_book_loans
+		WHERE book_loans_CardNo = borrower_CardNo)
