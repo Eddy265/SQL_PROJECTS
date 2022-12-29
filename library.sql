@@ -273,6 +273,20 @@ INSERT INTO tbl_book_authors
 		('19','George R.R. Martin'),
 		('20','Mark Lee');
 
+SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'public';
+
+SELECT * FROM tbl_book
+SELECT * FROM tbl_library_branch
+SELECT * FROM tbl_publisher
+
 
 /*Exercises*/
-1
+/* #1- How many copies of the book titled "The Lost Tribe" are owned by the library branch whose name is "Sharpstown"? */
+
+with ex_1 as (SELECT copies.book_copies_BranchID AS Branch_ID, branch.library_branch_BranchName AS Branch_Name,
+	   copies.book_copies_No_Of_Copies,
+	   book.book_Title AS Book_Title
+	   FROM tbl_book_copies AS copies
+			INNER JOIN tbl_book AS book ON copies.book_copies_BookID = book.book_BookID
+			INNER JOIN tbl_library_branch AS branch ON book_copies_BranchID = branch.library_branch_BranchID)
+select * from ex_1 where book_title = 'The Lost Tribe' and branch_name = 'Sharpstown'
