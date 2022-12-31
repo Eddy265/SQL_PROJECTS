@@ -29,9 +29,7 @@ CREATE TABLE tbl_borrower (
 		borrower_BorrowerPhone VARCHAR(50) NOT NULL
 	);
 
-
 SELECT * FROM tbl_borrower
-
 
 CREATE TABLE tbl_book_loans (
 	book_loans_LoansID serial PRIMARY KEY NOT NULL,
