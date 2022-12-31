@@ -278,7 +278,8 @@ SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'public';
 SELECT * FROM tbl_book
 SELECT * FROM tbl_library_branch
 SELECT * FROM tbl_publisher
-
+SELECT * FROM tbl_book_loans
+SELECT * FROM tbl_borrower
 
 /*Exercises*/
 /* No 1- How many copies of the book titled "The Lost Tribe" are owned by the library branch whose name is "Sharpstown"? */
@@ -307,3 +308,61 @@ SELECT borrower_BorrowerName, borrower_CardNo FROM tbl_borrower
 	WHERE NOT EXISTS
 		(SELECT * FROM tbl_book_loans
 		WHERE book_loans_CardNo = borrower_CardNo)
+
+/* No 4- For each book that is loaned out from the "Sharpstown" branch and whose DueDate 
+is 2/2/2018, retrieve the book title, the borrower's name, and the borrower's address.  */
+
+SELECT Branch.library_branch_BranchName,  Book.book_Title,
+   Borrower.borrower_BorrowerName, Borrower.borrower_BorrowerAddress,
+   Loans.book_loans_DateOut, Loans.book_loans_DueDate
+   FROM tbl_book_loans AS Loans
+	INNER JOIN tbl_book AS Book ON Loans.book_loans_BookID = Book.book_BookID
+	INNER JOIN tbl_borrower AS Borrower ON Loans.book_loans_CardNo = Borrower.borrower_CardNo
+	INNER JOIN tbl_library_branch AS Branch ON Loans.book_loans_BranchID = Branch.library_branch_BranchID
+	WHERE Loans.book_loans_DueDate = '2/2/18' AND Branch.library_branch_BranchName = 'Sharpstown'
+
+/* No 5- For each library branch, retrieve the branch name and the total number of books loaned out from that branch.  */
+
+SELECT  library_branch_BranchName as Lib_Branch, COUNT (book_loans_BranchID) as number_books_loaned
+	FROM tbl_book_loans
+	INNER JOIN tbl_library_branch ON tbl_book_loans.book_loans_BranchID = tbl_library_branch.library_branch_BranchID
+	GROUP BY library_branch_BranchName
+
+/* #6- Retrieve the names, addresses, and number of books checked out for all borrowers who have more than five books checked out. */
+
+WITH borrow AS (SELECT borrower_BorrowerName AS BorrowersName, borrower_BorrowerAddress AS BorrowerAddress, COUNT(book_loans_CardNo) AS count_books
+FROM tbl_borrower
+JOIN tbl_book_loans on tbl_borrower.borrower_CardNo = tbl_book_loans.book_loans_CardNo
+GROUP BY borrower_BorrowerName, borrower_BorrowerAddress order by count_books)
+SELECT * FROM borrow where count_books > 5
+
+
+/* No 7- For each book authored by "Stephen King", retrieve the title and the number of copies 
+owned by the library branch whose name is "Central".*/
+
+SELECT book_authors_AuthorName, book_title, library_branch_BranchName, book_copies_No_Of_Copies FROM tbl_book_authors
+	JOIN tbl_book ON tbl_book_authors.book_authors_BookID = tbl_book.book_BookID
+	JOIN tbl_book_copies ON tbl_book_authors.book_authors_BookID = tbl_book_copies.book_copies_BookID
+	JOIN tbl_library_branch ON tbl_book_copies.book_copies_BranchID = tbl_library_branch.library_branch_BranchID
+WHERE book_authors_AuthorName = 'Stephen King' AND library_branch_BranchName = 'Central' 
+
+/* No 8- Which borrower has more books borrowed*/
+
+SELECT borrower_BorrowerName, borrower_BorrowerAddress, COUNT(book_loans_CardNo) AS NumberofBooksBorrowed FROM tbl_borrower
+JOIN tbl_book_loans ON tbl_borrower.borrower_CardNo = tbl_book_loans.book_loans_CardNo
+GROUP BY borrower_BorrowerName,borrower_BorrowerAddress ORDER BY NumberofBooksBorrowed DESC LIMIT 1
+
+/* No 9- Which library branch has more books borrowed*/
+
+SELECT library_branch_BranchName, COUNT(book_loans_CardNo) AS NumberofBooksBorrowed FROM tbl_library_branch
+JOIN tbl_book_loans ON tbl_library_branch.library_branch_BranchID = tbl_book_loans.book_loans_BranchID
+GROUP BY library_branch_BranchName ORDER BY NumberofBooksBorrowed DESC LIMIT 1
+
+/* No 10- For each of the books, who is the publisher and which library branch can they be found?*/
+
+SELECT book_title, publisher_PublisherName AS PublisherName, library_branch_BranchName AS BranchName,
+book_copies_BookID
+FROM tbl_book 
+JOIN tbl_publisher ON tbl_book.book_PublisherName = tbl_publisher.publisher_PublisherName
+JOIN tbl_book_copies ON tbl_book.book_BookID = tbl_book_copies.book_copies_CopiesID
+JOIN tbl_library_branch ON tbl_book_copies.book_copies_BranchID = tbl_library_branch.library_branch_BranchID
