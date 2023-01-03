@@ -1,28 +1,27 @@
---REPLACE NULL VALUES WITH SPECIFIED VALUES
---IN POSTGRESQL
+/*REPLACE NULL VALUES WITH SPECIFIED VALUES IN POSTGRESQL USING 
+CASE STATEMENT AND COALESCE*/
 
---FOR THIS DEMO, WE WILL USE
---CASE STATEMENT
---COALESCE
+SELECT * FROM country
 
---COALESCE-------
+SELECT COUNT(*) FROM country WHERE head_of_state isnull;
+SELECT COUNT(*) FROM country WHERE gnp_old isnull;
+SELECT COUNT(*) FROM country WHERE indep_year isnull
 
-SELECT gnp_old, head_of_state, name from country;
+/*COALESCE*/
 
-SELECT COUNT(*) from country where gnp_old isnull
-
-SELECT COUNT(*) from country where head_of_state isnull
-
-select coalesce (head_of_state, 'not provided') as head_of_state,
-    coalesce (gnp_old, '0') from country;
+SELECT COALESCE (head_of_state, 'not provided') AS head_of_state,
+    COALESCE (gnp_old, '0'),
+    COALESCE (indep_year, '1900')  FROM country;
     
-
---CASE STATEMENT--
+/*CASE STATEMENT*/
 
 SELECT 
     CASE WHEN gnp_old isnull then '0' else gnp_old
     END,
     CASE WHEN head_of_state isnull then 'not available'
     ELSE head_of_state
+    END,
+    CASE WHEN indep_year isnull then '1900' 
+    ELSE indep_year
     END
-    from country;
+    FROM country;
