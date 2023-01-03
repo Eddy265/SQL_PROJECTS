@@ -2,6 +2,12 @@
 
 CREATE TABLES*/
 
+CREATE TABLE tbl_publisher (
+		publisher_PublisherName VARCHAR(100) PRIMARY KEY NOT NULL,
+		publisher_PublisherAddress VARCHAR(200) NOT NULL,
+		publisher_PublisherPhone VARCHAR(50) NOT NULL,
+	);
+
 CREATE TABLE tbl_book (
 		book_BookID INT PRIMARY KEY NOT NULL,
 		book_Title VARCHAR(100) NOT NULL,
@@ -364,3 +370,6 @@ FROM tbl_book
 JOIN tbl_publisher ON tbl_book.book_PublisherName = tbl_publisher.publisher_PublisherName
 JOIN tbl_book_copies ON tbl_book.book_BookID = tbl_book_copies.book_copies_CopiesID
 JOIN tbl_library_branch ON tbl_book_copies.book_copies_BranchID = tbl_library_branch.library_branch_BranchID
+
+
+SELECT * FROM tbl_library_branch
