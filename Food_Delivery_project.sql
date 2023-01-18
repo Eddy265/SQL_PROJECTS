@@ -214,7 +214,6 @@ select count(*) from customers
 
 /*Questions
 1. How many customers live on "Elm St" and "Pine St"?*/
-
 SELECT 'Pine St' as address, COUNT(*) as customer_count
 FROM customers
 WHERE address LIKE '%Pine St%'
@@ -224,7 +223,7 @@ FROM customers
 WHERE address LIKE '%Elm St%';
 
 
---2. How many Customers ordered pizza from Dominos first before ordering from Pizza Hut
+/*2. How many Customers ordered pizza from Dominos first before ordering from Pizza Hut*/
 SELECT COUNT(DISTINCT customers.customer_id) as num_customers
 FROM customers
 JOIN orders as dominos_orders ON customers.customer_id = dominos_orders.customer_id
@@ -234,10 +233,62 @@ WHERE NOT EXISTS (
     FROM orders as pizzahut_orders
     WHERE pizzahut_orders.customer_id = customers.customer_id
     AND pizzahut_orders.pizza_place = 'Pizza Hut'
-    AND pizzahut_orders.order_date < dominos_orders.order_date
-)
+    AND pizzahut_orders.order_date < dominos_orders.order_date)
 
---3. 
+/*3. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
