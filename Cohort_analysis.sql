@@ -68,40 +68,55 @@ SELECT gender, cohort_month, avg_purchase_value
 FROM avg_purchase_value
 ORDER BY gender, cohort_month
 
---3. What is the retention rate of customers acquired in each month?
+/*3. What is the retention rate of customers acquired in each month?
+Customer retention rate (cohort analysis).
+ This information is useful for businesses to understand how well they are retaining customers over time and identify any patterns
+ or trends in customer retention. This can help businesses make informed decisions about their marketing and retention strategies, 
+ and identify areas for improvement. Additionally, by analyzing customer retention by acquisition month, businesses can also identify
+ any seasonality in customer retention rates. This can help them plan for the future and make necessary adjustments to their
+ strategies and resources accordingly.*/
+
+WITH customer_data AS (
+SELECT user_id, purchased, date,
+EXTRACT(MONTH FROM date) as acquisition_month
+FROM public.customer_seg)
+SELECT acquisition_month, COUNT(DISTINCT user_id) as cohort_size,
+COUNT(DISTINCT CASE WHEN purchased = 1 THEN user_id END) as retained_customers,
+FLOOR((COUNT(DISTINCT CASE WHEN purchased = 1 THEN user_id END) / COUNT(DISTINCT user_id)::float) * 100) || '%' as retention_rate
+FROM customer_data
+GROUP BY acquisition_month
+ORDER BY acquisition_month;
+
+
+/*4. How does the average purchase value of customers vary over time within each 
+cohort in the year 2021?
+
+This kind of analysis can help businesses understand how customer behavior changes over time, 
+specifically in relation to the initial acquisition of the customer. By analyzing the average 
+purchase value of customers within each cohort, businesses can gain insights into the purchasing 
+patterns of customers acquired in different months, and potentially identify trends or changes in
+customer behavior that may be impacting their purchase value. For example, if the average purchase 
+value of a cohort acquired in January is significantly higher than a cohort acquired in June, this
+could indicate that customers acquired in January are more valuable or engaged than those acquired
+in June. By focusing on a specific year, such as 2021, businesses can also better identify any patterns
+or changes in customer behavior that have occurred within that specific time frame. This analysis can help
+businesses to make more informed decisions about their marketing and sales strategies, as well as identify
+areas where they can improve customer retention and engagement.*/
+
 WITH customer_cohort AS (
-    SELECT 
-        DATE_TRUNC('month', date) as cohort_month,
-        COUNT(DISTINCT user_id) as total_customers,
-        SUM(CASE WHEN date >= date THEN 1 ELSE 0 END) as retained_customers
-    FROM public.customer_seg
-    GROUP BY cohort_month
+SELECT
+DATE_TRUNC('month', date) as cohort_month,
+user_id,
+SUM(purchase_amount) as total_purchase_amount
+FROM public.customer_seg WHERE date >= '2021-01-01' AND date < '2022-01-01'
+GROUP BY cohort_month, user_id
 )
-SELECT 
-    cohort_month,
-    retained_customers / total_customers as retention_rate
+SELECT
+cohort_month,
+EXTRACT(MONTH FROM cohort_month) as cohort_month_only,
+FLOOR (AVG(total_purchase_amount)) AS Average_purchase
 FROM customer_cohort
-ORDER BY cohort_month
-
-
---4. How does the average purchase value of customers vary over time within each cohort?
-WITH customer_cohort AS (
-    SELECT 
-        DATE_TRUNC('month', date) as cohort_month,
-        user_id,
-        SUM(purchase_amount) as total_purchase_amount
-    FROM public.customer_seg
-    GROUP BY cohort_month, user_id
-)
-SELECT 
-    cohort_month,
-    AVG(total_purchase_amount) 
-	FROM customer_cohort
-
-
-
-
-
+GROUP BY cohort_month order by cohort_month_only asc;
 
 
 

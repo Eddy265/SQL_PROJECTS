@@ -172,6 +172,62 @@ GROUP BY gender
 ORDER BY percentage_purchased DESC
 
 
+--12. What are the gender and age of the customers who made a purchase in the last month but not this month?
+WITH last_month_purchases AS (
+    SELECT gender, age, date
+    FROM public.customer_seg
+    WHERE date >= date_trunc('month', current_date - INTERVAL '1 month')
+    AND date < date_trunc('month', current_date)
+), 
+this_month_purchases AS (
+    SELECT gender, age, date
+    FROM public.customer_seg
+    WHERE date >= date_trunc('month', current_date)
+)
+SELECT gender, age, date
+FROM last_month_purchases
+EXCEPT
+SELECT gender, age, date
+FROM this_month_purchases;
+
+--13. Filter the customers who have a salary greater than $125k and have not made any purchase in the past week?
+WITH last_week_purchases AS (
+    SELECT user_id, '$'||salary::text as salary, gender, age,
+    CASE 
+        WHEN purchased = 0 THEN 'No Purchase'
+        ELSE 'Purchase'
+    END as purchase_status
+    FROM public.customer_seg
+    WHERE date >= date_trunc('day', current_date - INTERVAL '7 day')
+), high_salary_customers AS (
+    SELECT user_id, '$'||salary::text as salary, gender, age,
+    CASE 
+        WHEN purchased = 0 THEN 'No Purchase'
+        ELSE 'Purchase'
+    END as purchase_status
+    FROM public.customer_seg
+    WHERE salary > 125000)
+SELECT user_id, salary, gender, age, purchase_status
+FROM high_salary_customers
+WHERE user_id NOT IN (SELECT user_id FROM last_week_purchases) 
+AND purchase_status = 'No Purchase'
+EXCEPT
+SELECT user_id, salary, gender, age, purchase_status
+FROM last_week_purchases;
+
+
+--14. What are the user_id of customers who have not made a purchase in the last 2 years?
+WITH last_2_years AS (
+    SELECT user_id
+    FROM public.customer_seg
+    WHERE date >= date_trunc('year', current_date - INTERVAL '2 year')
+)
+SELECT user_id
+FROM public.customer_seg
+WHERE user_id NOT IN (SELECT user_id FROM last_2_years)
+EXCEPT
+SELECT user_id
+FROM last_2_years;
 
 
 
