@@ -90,20 +90,118 @@ or changes in customer behavior that have occurred within that specific time fra
 businesses to make more informed decisions about their marketing and sales strategies, as well as identify
 areas where they can improve customer retention and engagement.*/
 
-WITH customer_cohort AS (
-SELECT
-DATE_TRUNC('month', date) as cohort_month,
-user_id,
+WITH customer_cohort AS (SELECT
+DATE_TRUNC('month', date) as cohort_month,user_id,
 SUM(purchase_amount) as total_purchase_amount
 FROM public.customer_seg WHERE date >= '2021-01-01' AND date < '2022-01-01'
-GROUP BY cohort_month, user_id
-)
+GROUP BY cohort_month, user_id)
 SELECT
 cohort_month,
 EXTRACT(MONTH FROM cohort_month) as cohort_month_only,
 FLOOR (AVG(total_purchase_amount)) AS Average_purchase
 FROM customer_cohort
 GROUP BY cohort_month order by cohort_month_only asc;
+
+
+/* 5. Compare the average purchase value in 2021 and 2022
+This kind of analysis can help businesses understand how their customer behavior and purchase habits change 
+over time. By comparing the average purchase value of customers between two different years, businesses can 
+identify trends and make informed decisions on how to improve their marketing strategies and target specific 
+customer groups.*/
+WITH customer_cohort AS (SELECT
+DATE_TRUNC('month', date) as cohort_month,
+EXTRACT(YEAR FROM DATE_TRUNC('month', date)) as cohort_year,
+user_id,
+SUM(purchase_amount) as total_purchase_amount
+FROM public.customer_seg
+GROUP BY cohort_month, user_id)
+SELECT
+cohort_year,
+FLOOR (AVG(total_purchase_amount)) AS Average_purchase
+FROM customer_cohort
+WHERE cohort_year IN (2021,2022)
+GROUP BY cohort_year
+ORDER BY cohort_year;
+
+
+/* 6. Compare the average purchase value over time in 2021 and 2022
+This kind of analysis can help businesses understand how their customer behavior and purchase habits change 
+over time. By comparing the average purchase value of customers between two different years, businesses can 
+identify trends and make informed decisions on how to improve their marketing strategies and target specific 
+customer groups.*/
+WITH customer_cohort_2021 AS (SELECT
+DATE_TRUNC('month', date) as cohort_month, user_id,
+SUM(purchase_amount) as total_purchase_amount
+FROM public.customer_seg
+WHERE date >= '2021-01-01' AND date < '2022-01-01'
+GROUP BY cohort_month, user_id),
+customer_cohort_2022 AS (SELECT
+DATE_TRUNC('month', date) as cohort_month,user_id,
+SUM(purchase_amount) as total_purchase_amount
+FROM public.customer_seg
+WHERE date >= '2022-01-01' AND date < '2023-01-01'
+GROUP BY cohort_month, user_id) SELECT cohort_month,
+FLOOR (AVG(total_purchase_amount)) AS avg_purchase_2021,
+FLOOR (AVG(total_purchase_amount)) AS avg_purchase_2022
+FROM customer_cohort_2021
+GROUP BY cohort_month
+UNION
+SELECT cohort_month,
+NULL as avg_purchase_2021,
+FLOOR (AVG(total_purchase_amount)) AS avg_purchase_2022
+FROM customer_cohort_2022
+GROUP BY cohort_month;
+
+
+--OR
+
+
+WITH customer_cohort_2021 AS (
+SELECT DATE_TRUNC('month', date) as cohort_month,
+SUM(purchase_amount) as total_purchase_amount
+FROM public.customer_seg
+WHERE date >= '2021-01-01' AND date < '2022-01-01'
+GROUP BY cohort_month),
+customer_cohort_2022 AS (
+SELECT DATE_TRUNC('month', date) as cohort_month,
+SUM(purchase_amount) as total_purchase_amount
+FROM public.customer_seg
+WHERE date >= '2022-01-01' AND date < '2023-01-01'
+GROUP BY cohort_month)
+SELECT
+cohort_month,
+FLOOR (AVG(CASE WHEN cohort_month = customer_cohort_2021.cohort_month THEN total_purchase_amount END)) AS avg_purchase_2021,
+FLOOR (AVG(CASE WHEN cohort_month = customer_cohort_2022.cohort_month THEN total_purchase_amount END)) AS avg_purchase_2022
+FROM customer_cohort_2021
+FULL JOIN customer_cohort_2022
+ON customer_cohort_2021.cohort_month = customer_cohort_2022.cohort_month
+GROUP BY cohort_month;
+
+
+/* 7. Average purchase value over time in 2019*/
+WITH customer_cohort AS (
+SELECT
+DATE_TRUNC('month', date) as cohort_month,
+user_id,
+SUM(purchase_amount) as total_purchase_amount
+FROM public.customer_seg
+WHERE date_part('year', date) IN (2019, 2021)
+GROUP BY cohort_month, user_id)
+SELECT
+cohort_month,
+DATE_PART('year', cohort_month) as year,
+FLOOR (AVG(total_purchase_amount)) as average_purchase
+FROM customer_cohort
+GROUP BY cohort_month, year
+ORDER BY cohort_month, year
+
+
+/* 8. Check if there is any customer who earned more than 150k*/
+
+SELECT EXISTS (SELECT FROM public.customer_seg WHERE salary > 150000)
+
+
+
 
 
 
