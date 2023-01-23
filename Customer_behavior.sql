@@ -152,32 +152,6 @@ FLOOR (AVG(total_purchase_amount)) AS avg_purchase_2022
 FROM customer_cohort_2022
 GROUP BY cohort_month;
 
-
---OR
-
-
-WITH customer_cohort_2021 AS (
-SELECT DATE_TRUNC('month', date) as cohort_month,
-SUM(purchase_amount) as total_purchase_amount
-FROM public.customer_seg
-WHERE date >= '2021-01-01' AND date < '2022-01-01'
-GROUP BY cohort_month),
-customer_cohort_2022 AS (
-SELECT DATE_TRUNC('month', date) as cohort_month,
-SUM(purchase_amount) as total_purchase_amount
-FROM public.customer_seg
-WHERE date >= '2022-01-01' AND date < '2023-01-01'
-GROUP BY cohort_month)
-SELECT
-cohort_month,
-FLOOR (AVG(CASE WHEN cohort_month = customer_cohort_2021.cohort_month THEN total_purchase_amount END)) AS avg_purchase_2021,
-FLOOR (AVG(CASE WHEN cohort_month = customer_cohort_2022.cohort_month THEN total_purchase_amount END)) AS avg_purchase_2022
-FROM customer_cohort_2021
-FULL JOIN customer_cohort_2022
-ON customer_cohort_2021.cohort_month = customer_cohort_2022.cohort_month
-GROUP BY cohort_month;
-
-
 /* 7. Average purchase value over time in 2019*/
 WITH customer_cohort AS (
 SELECT
