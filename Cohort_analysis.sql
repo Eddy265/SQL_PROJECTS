@@ -18,35 +18,8 @@ to inform business decisions and improve the customer experience.
 
 
 QUESTIONS
-1. What is the retention rate of customers who purchased in different age groups?*/
-WITH customer_cohort AS (
-    SELECT 
-        CASE 
-            WHEN age < 20 THEN 'Under 20'
-            WHEN age >= 20 AND age < 30 THEN '20-29'
-            WHEN age >= 30 AND age < 40 THEN '30-39'
-            WHEN age >= 40 AND age < 50 THEN '40-49'
-            WHEN age >= 50 THEN '50 or above'
-            ELSE 'Unknown'
-        END as age_group,
-        DATE_TRUNC('month', date) as cohort_month,
-        COUNT(DISTINCT user_id) as total_customers
-    FROM public.customer_seg
-    WHERE purchased = 1
-    GROUP BY age_group, cohort_month
-), retention_rate AS (
-    SELECT 
-        age_group, 
-        cohort_month, 
-        total_customers,
-        CEILING((SUM(total_customers) OVER (PARTITION BY age_group ORDER BY cohort_month) / total_customers) * 100) as retention_rate
-    FROM customer_cohort
-)
-SELECT age_group, cohort_month, retention_rate
-FROM retention_rate
-ORDER BY age_group, cohort_month
 
---2. Average purchase value of customers who purchased by different gender over time:
+1. Average purchase value of customers who purchased by different gender over time*/
 WITH customer_cohort AS (
     SELECT 
         gender,
@@ -67,7 +40,7 @@ SELECT gender, cohort_month, avg_purchase_value
 FROM avg_purchase_value
 ORDER BY gender, cohort_month
 
-/*3. What is the retention rate of customers acquired in each month?
+/* 2. What is the retention rate of customers acquired in each month?
 Customer retention rate (cohort analysis).
  This information is useful for businesses to understand how well they are retaining customers over time and identify any patterns
  or trends in customer retention. This can help businesses make informed decisions about their marketing and retention strategies, 
@@ -87,7 +60,7 @@ GROUP BY acquisition_month
 ORDER BY acquisition_month;
 
 
-/*4. How does the average purchase value of customers vary over time within each 
+/* 3. How does the average purchase value of customers vary over time within each 
 cohort in the year 2021? DEMO 34
 
 This kind of analysis can help businesses understand how customer behavior changes over time, 
@@ -117,24 +90,29 @@ FROM customer_cohort
 GROUP BY cohort_month order by cohort_month_only asc;
 
 
-/* 5. Distribution of customers by age group.
-This information can be useful for businesses as it allows them to understand the demographic makeup of their 
-customer base and potentially tailor their marketing and sales strategies to target specific age groups more
-effectively. For example, if a business finds that a large proportion of their customers are in the older age group, 
-they may want to focus on developing products and services that cater to the needs and preferences of older customers. 
-Additionally, this information can be useful for identifying trends and patterns in customer behavior, which can be used
-to improve customer targeting and personalization, as well as to identify potential areas for growth or expansion.*/
-
-SELECT
-    CASE 
-        WHEN age < 25 THEN 'Under 25'
-        WHEN age BETWEEN 25 AND 34 THEN '25-34'
-        WHEN age BETWEEN 35 AND 44 THEN '35-44'
-        ELSE '45 and above'
-    END AS age_group,
-    COUNT(*)
-FROM public.customer_seg
-GROUP BY age_group;
+/* 4. What is the retention rate of customers who purchased in different age groups?*/
+WITH customer_cohort AS (SELECT 
+        CASE 
+            WHEN age < 20 THEN 'Under 20'
+            WHEN age >= 20 AND age < 30 THEN '20-29'
+            WHEN age >= 30 AND age < 40 THEN '30-39'
+            WHEN age >= 40 AND age < 50 THEN '40-49'
+            WHEN age >= 50 THEN '50 or above'
+            ELSE 'Unknown'
+        END as age_group,
+        DATE_TRUNC('month', date) as cohort_month,
+        COUNT(DISTINCT user_id) as total_customers
+    FROM public.customer_seg
+    WHERE purchased = 1
+    GROUP BY age_group, cohort_month), retention_rate AS (SELECT 
+        age_group, 
+        cohort_month, 
+        total_customers,
+        CEILING((SUM(total_customers) OVER (PARTITION BY age_group ORDER BY cohort_month) / total_customers) * 100) as retention_rate
+    FROM customer_cohort)
+SELECT age_group, cohort_month, retention_rate
+FROM retention_rate
+ORDER BY age_group, cohort_month
 
 
 
