@@ -216,13 +216,32 @@ SELECT user_id, salary, gender, age, purchase_status
 FROM last_week_purchases;
 
 
---14. What are the user_id of customers who have not made a purchase in the last 2 years?
+/* 14. Distribution of customers by age group.
+This information can be useful for businesses as it allows them to understand the demographic makeup of their 
+customer base and potentially tailor their marketing and sales strategies to target specific age groups more
+effectively. For example, if a business finds that a large proportion of their customers are in the older age group, 
+they may want to focus on developing products and services that cater to the needs and preferences of older customers. 
+Additionally, this information can be useful for identifying trends and patterns in customer behavior, which can be used
+to improve customer targeting and personalization, as well as to identify potential areas for growth or expansion.*/
+
+SELECT
+    CASE 
+        WHEN age < 25 THEN 'Under 25'
+        WHEN age BETWEEN 25 AND 34 THEN '25-34'
+        WHEN age BETWEEN 35 AND 44 THEN '35-44'
+        ELSE '45 and above'
+    END AS age_group,
+    COUNT(*)
+FROM public.customer_seg
+GROUP BY age_group;
+
+
+--15. What are the user_id of customers who have not made a purchase in the last 2 years?
 WITH last_2_years AS (
     SELECT user_id
     FROM public.customer_seg
-    WHERE date >= date_trunc('year', current_date - INTERVAL '2 year')
-)
-SELECT user_id
+    WHERE date >= date_trunc('year', current_date - INTERVAL '2 year'))
+SELECT user_id AS No_purchase_in_the_last_2years
 FROM public.customer_seg
 WHERE user_id NOT IN (SELECT user_id FROM last_2_years)
 EXCEPT
