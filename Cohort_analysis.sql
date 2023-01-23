@@ -62,8 +62,7 @@ WITH customer_cohort AS (
         cohort_month, 
         total_purchase_amount,
         ROUND (total_purchase_amount / total_customers, 0) as avg_purchase_value
-    FROM customer_cohort
-)
+    FROM customer_cohort)
 SELECT gender, cohort_month, avg_purchase_value
 FROM avg_purchase_value
 ORDER BY gender, cohort_month
@@ -74,7 +73,7 @@ Customer retention rate (cohort analysis).
  or trends in customer retention. This can help businesses make informed decisions about their marketing and retention strategies, 
  and identify areas for improvement. Additionally, by analyzing customer retention by acquisition month, businesses can also identify
  any seasonality in customer retention rates. This can help them plan for the future and make necessary adjustments to their
- strategies and resources accordingly.*/
+ strategies and resources accordingly.*/ DEMO 35
 
 WITH customer_data AS (
 SELECT user_id, purchased, date,
@@ -89,7 +88,7 @@ ORDER BY acquisition_month;
 
 
 /*4. How does the average purchase value of customers vary over time within each 
-cohort in the year 2021?
+cohort in the year 2021? DEMO 34
 
 This kind of analysis can help businesses understand how customer behavior changes over time, 
 specifically in relation to the initial acquisition of the customer. By analyzing the average 
@@ -109,8 +108,7 @@ DATE_TRUNC('month', date) as cohort_month,
 user_id,
 SUM(purchase_amount) as total_purchase_amount
 FROM public.customer_seg WHERE date >= '2021-01-01' AND date < '2022-01-01'
-GROUP BY cohort_month, user_id
-)
+GROUP BY cohort_month, user_id)
 SELECT
 cohort_month,
 EXTRACT(MONTH FROM cohort_month) as cohort_month_only,
@@ -119,12 +117,30 @@ FROM customer_cohort
 GROUP BY cohort_month order by cohort_month_only asc;
 
 
+/* 5. Distribution of customers by age group.
+This information can be useful for businesses as it allows them to understand the demographic makeup of their 
+customer base and potentially tailor their marketing and sales strategies to target specific age groups more
+effectively. For example, if a business finds that a large proportion of their customers are in the older age group, 
+they may want to focus on developing products and services that cater to the needs and preferences of older customers. 
+Additionally, this information can be useful for identifying trends and patterns in customer behavior, which can be used
+to improve customer targeting and personalization, as well as to identify potential areas for growth or expansion.*/
+
+SELECT
+    CASE 
+        WHEN age < 25 THEN 'Under 25'
+        WHEN age BETWEEN 25 AND 34 THEN '25-34'
+        WHEN age BETWEEN 35 AND 44 THEN '35-44'
+        ELSE '45 and above'
+    END AS age_group,
+    COUNT(*)
+FROM public.customer_seg
+GROUP BY age_group;
 
 
 
 
 
-
+SELECT * FROM public.customer_seg
 
 
 
