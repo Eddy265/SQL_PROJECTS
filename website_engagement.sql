@@ -11,8 +11,7 @@ date DATE PRIMARY KEY NOT NULL,
 page_views INT NOT NULL,
 unique_visitors INT NOT NULL,
 bounce_rate FLOAT NOT NULL,
-time_on_site FLOAT NOT NULL
-);
+time_on_site FLOAT NOT NULL);
 
 
 CREATE TABLE engagement_metrics (
@@ -22,8 +21,7 @@ comments INT NOT NULL,
 shares INT NOT NULL,
 likes INT NOT NULL,
 dislikes INT NOT NULL,
-FOREIGN KEY (date) REFERENCES website_traffic(date)
-);
+FOREIGN KEY (date) REFERENCES website_traffic(date));
 
 INSERT INTO website_traffic (id, date, page_views, unique_visitors, bounce_rate, time_on_site)
 VALUES (1, '2022-01-01', 1000, 800, 0.2, 5),
