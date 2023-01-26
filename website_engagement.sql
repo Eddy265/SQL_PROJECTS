@@ -1,4 +1,9 @@
+/* WEBSITE ENGAGEMENT ANALYSIS PROJECT
 
+This project aims to analyze website traffic and engagement metrics to gain insights on user behavior and engagement. 
+The data used in this project is sourced from two tables, website_traffic and engagement_metrics, which contain information 
+on page views, unique visitors, bounce rate, time spent on site, comments, shares, likes, and dislikes. By understanding the 
+metrics analyzed, we can make informed decisions on how to improve the website and enhance the user experience.*/
 
 CREATE TABLE website_traffic (
 id INT,
@@ -81,8 +86,7 @@ insert into engagement_metrics values (1, '2022-01-01', 15, 12, 25, 2),
 	(17, '2022-01-17', 79, 23, 179, 56),
 	(18, '2022-01-18', 121, 22, 138, 12),
 	(19, '2022-01-12', 256, 89, 128, 4),
-	(20, '2022-01-12', 23, 22, 321, 2);
-
+	(20, '2022-01-12', 23, 22, 321, 2)...;
 
 
 SELECT * FROM engagement_metrics
@@ -90,7 +94,6 @@ RIGHT JOIN website_traffic
 ON engagement_metrics.date = website_traffic.date;
 
 SELECT * FROM engagement_metrics
-
 SELECT * FROM website_traffic
 
 
