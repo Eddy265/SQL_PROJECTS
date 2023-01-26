@@ -41,8 +41,6 @@ VALUES (1, '2022-01-01', 1000, 800, 0.2, 5),
 (18, '2022-01-18', 1300, 1000, 0.05, 10),
 (19, '2022-01-19', 1000, 800, 0.2, 5),
 (20, '2022-01-20', 1200, 900, 0.15, 7);
-
-INSERT INTO website_traffic (id, date, page_views, unique_visitors, bounce_rate, time_on_site) VALUES
 (21, '2022-01-21', 1122 80, 0.2, 2.5),
 (22, '2022-01-22', 1111 90, 0.15, 2.8),
 (23, '2022-01-23', 1112 95, 0.1, 3.0),
@@ -64,28 +62,26 @@ INSERT INTO website_traffic (id, date, page_views, unique_visitors, bounce_rate,
 
 
 --INSERT INTO engagement_metrics
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (1, '2022-01-01', 15, 12, 25, 2);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (2, '2022-01-02', 20, 15, 30, 5);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (3, '2022-01-03', 18, 14, 27, 3);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (4, '2022-01-04', 12, 10, 20, 1);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (5, '2022-01-05', 14, 11, 23, 2);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (6, '2022-01-06', 16, 13, 25, 3);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (7, '2022-01-07', 17, 14, 28, 4);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (8, '2022-01-08', 19, 16, 30, 5);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (9, '2022-01-09', 21, 18, 32, 6);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (10, '2022-01-10', 23, 20, 34, 7);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (11, '2022-01-11', 25, 22, 36, 8);
-insert into engagement_metrics (id, date, comments, shares, likes, dislikes) values (12, '2022-01-12', 27, 24, 38, 9);
-
-insert into engagement_metrics values (13, '2022-01-13', 27, 24, 38, 56),
+insert into engagement_metrics values (1, '2022-01-01', 15, 12, 25, 2),
+ (2, '2022-01-02', 20, 15, 30, 5),
+ (3, '2022-01-03', 18, 14, 27, 3),
+ (4, '2022-01-04', 12, 10, 20, 1),
+ (5, '2022-01-05', 14, 11, 23, 2),
+(6, '2022-01-06', 16, 13, 25, 3),
+(7, '2022-01-07', 17, 14, 28, 4),
+ (8, '2022-01-08', 19, 16, 30, 5),
+ (9, '2022-01-09', 21, 18, 32, 6),
+ (10, '2022-01-10', 23, 20, 34, 7),
+(11, '2022-01-11', 25, 22, 36, 8),
+(12, '2022-01-12', 27, 24, 38, 9),
+(13, '2022-01-13', 27, 24, 38, 56),
 	(14, '2022-01-14', 78, 32, 564, 43),
 	(15, '2022-01-15', 35, 24, 38, 22),
 	(16, '2022-01-16', 56, 32, 454, 25),
 	(17, '2022-01-17', 79, 23, 179, 56),
 	(18, '2022-01-18', 121, 22, 138, 12),
 	(19, '2022-01-12', 256, 89, 128, 4),
-	(20, '2022-01-12', 23, 22, 321, 2)
-
+	(20, '2022-01-12', 23, 22, 321, 2);
 
 
 
@@ -93,16 +89,97 @@ SELECT * FROM engagement_metrics
 RIGHT JOIN website_traffic
 ON engagement_metrics.date = website_traffic.date;
 
-
-
-DELETE FROM engagement_metrics
-WHERE id IN (35,45)
-
-
-UPDATE engagement_metrics
-SET date = '2022-01-20' where id = 20
+SELECT * FROM engagement_metrics
 
 SELECT * FROM website_traffic
+
+
+/* QUESTIONS
+
+1. What was the total number of unique visitors for a specific date range?*/
+SELECT SUM(unique_visitors) FROM website_traffic WHERE date BETWEEN '2022-02-07' AND '2022-02-09';
+
+/* 2. What was the average bounce rate for a specific date range?*/
+SELECT AVG(bounce_rate) FROM website_traffic WHERE date BETWEEN '2022-01-01' AND '2022-02-09';
+
+/* 3. What is the average time spent on the website by visitors? */
+SELECT CONCAT(FLOOR(AVG(time_on_site)), ' minutes') as Avg_time_spent_on_web 
+FROM website_traffic;
+
+/* 4. What was the engagement rate between january and 9th feb 2022?*/
+WITH engagement AS (
+  SELECT date, SUM(comments) + SUM(likes) + SUM(shares) AS engagement
+  FROM engagement_metrics
+  WHERE date BETWEEN '2022-01-01' AND '2022-02-09'
+  GROUP BY date)
+SELECT e.date, ROUND(SUM(engagement) / SUM(w.page_views), 2) as engagement_rate, 
+CONCAT(ROUND(SUM(engagement) / SUM(w.page_views)*100, 2), '%') as engagement_rate_percent
+FROM engagement e
+JOIN website_traffic w
+ON e.date = w.date
+GROUP BY e.date;
+
+
+/* 5. Which 3 days has more engagement?*/
+WITH engagement AS (
+  SELECT date, SUM(comments) + SUM(likes) + SUM(shares) AS engagement
+  FROM engagement_metrics
+  WHERE date BETWEEN '2022-01-01' AND '2022-02-09'
+  GROUP BY date)
+SELECT e.date, ROUND(SUM(engagement) / SUM(w.page_views), 2) as engagement_rate, 
+CONCAT(ROUND(SUM(engagement) / SUM(w.page_views)*100, 2), '%') as engagement_rate_percent
+FROM engagement e
+JOIN website_traffic w
+ON e.date = w.date
+GROUP BY e.date
+ORDER BY engagement_rate DESC
+LIMIT 3;
+
+/*6. What is the total engagement (comments, likes, shares) by day?*/
+SELECT date, SUM(comments) + SUM(likes) + SUM(shares) as engagement
+FROM engagement_metrics
+GROUP BY date
+ORDER BY engagement desc;
+
+/*7. What is the total engagement by day of the week?*/
+WITH engagement AS ( SELECT date, SUM(comments) + SUM(likes) + SUM(shares) 
+AS engagement FROM engagement_metrics GROUP BY date )
+SELECT
+CASE
+WHEN DATE_PART('dow', e.date) = 1 THEN 'Monday'
+WHEN DATE_PART('dow', e.date) = 2 THEN 'Tuesday'
+WHEN DATE_PART('dow', e.date) = 3 THEN 'Wednesday'
+WHEN DATE_PART('dow', e.date) = 4 THEN 'Thursday'
+WHEN DATE_PART('dow', e.date) = 5 THEN 'Friday'
+WHEN DATE_PART('dow', e.date) = 6 THEN 'Saturday'
+WHEN DATE_PART('dow', e.date) = 0 THEN 'Sunday'
+END as day_of_week, SUM(engagement) as total_engagement 
+FROM engagement e GROUP BY day_of_week
+ORDER BY total_engagement desc;
+
+/*8. What is the average engagement per unique visitor?*/
+
+WITH engagement AS (SELECT date, SUM(comments) + SUM(likes) + SUM(shares) 
+AS engagement FROM engagement_metrics GROUP BY date)
+SELECT ROUND (AVG(e.engagement/w.unique_visitors), 2) as average_engagement_per_unique_visitor
+FROM website_traffic w
+JOIN engagement e ON w.date = e.date;
+
+
+/*9. What is the average bounce rate for days with more than 1000 unique visitors?*/
+SELECT AVG(bounce_rate) as average_bounce_rate FROM website_traffic 
+WHERE unique_visitors > 1000;
+
+/* 10. What is the total number of unique visitors for days with a bounce rate above 20%?*/
+SELECT SUM(unique_visitors) as total_unique_visitors 
+FROM website_traffic WHERE bounce_rate > 0.2;
+
+
+/* 11. How many days have a bounce rate above the average bounce rate?*/
+WITH avg_bounce_rate AS (SELECT AVG(bounce_rate) as avg_bounce_rate FROM website_traffic)
+SELECT CONCAT (COUNT(*), ' ', 'days') as number_of_days FROM website_traffic w
+JOIN avg_bounce_rate a ON w.bounce_rate > a.avg_bounce_rate;
+
 
 
 
