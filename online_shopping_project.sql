@@ -474,6 +474,7 @@ INSERT INTO Brand VALUES('Canon');
 INSERT INTO Brand VALUES('DELL');
 INSERT INTO Brand VALUES('GoPro');
 INSERT INTO Brand VALUES('Microsoft');
+INSERT INTO Brand VALUES('Apple');
 
 INSERT INTO ServicePoint VALUES(27,'2045 Sanguinet Street','Montreal','Quebec','10:00 am','5:30 pm');
 INSERT INTO ServicePoint VALUES(72,'37 Sherbrook Street','Montreal','Quebec','9:30 am','5:30 pm');
@@ -489,6 +490,9 @@ INSERT INTO Product VALUES(5,218,'GoPro','GoPro HERO5','cameras','CHDHX-501-CA',
 INSERT INTO Product VALUES(6,218,'Microsoft','Microsoft Xbox 360 Wired Controller for Windows','controllers','52A-00004','black',60,35);
 INSERT INTO Product VALUES(7,8,'Microsoft','Microsoft Sculpt Ergonomic Wireless Bluetrack Desktop Keyboard','computer accessories','L5V-00003','black',70,126);
 INSERT INTO Product VALUES(8,8,'Microsoft','Microsoft Surface Pro 4 i5 (128GB) with Wireless Media Adapter','laptop','CR5-00001','black',30,1350);
+INSERT INTO Product VALUES(9,8,'Apple','Macbook pro','laptop','Ap-00001','Grey',10,2350);
+INSERT INTO Product VALUES(10,77, 'Apple', 'AirPods Pro','Airpod','October 30 model','white',10,450);
+INSERT INTO Product VALUES(11,10,'Apple','Apple watch series 5','Watch','2021 model','black',10,500);
 
 
 INSERT INTO OrderItem VALUES(1,1,262,'2016-09-18');
@@ -632,6 +636,40 @@ GROUP BY u.name, a.userid, a.province, o.paymentstate
 ORDER BY total_amount DESC LIMIT 3) 
 AS Rev_from_top3;
 
+-- 3. What are the total sales by brand?
+SELECT brandname, SUM(product.quantity*product.price) as total_sales
+FROM product
+JOIN brand b ON product.brand = b.brandname 
+GROUP BY brandname ORDER BY total_sales desc;
+
+--4. What are the total sales by store?
+SELECT s.sid, s.name, SUM(product.quantity*product.price) as total_sales
+FROM store s
+JOIN product ON s.sid = product.sid 
+GROUP BY s.name, s.sid ORDER BY total_sales desc;
+
+-- 5. Which products are most popular?
+SELECT name, SUM(quantity) as total_quantity
+FROM product 
+GROUP BY name
+ORDER BY total_quantity DESC;
+
+--6. Customer analysis: Who are the top customers?
+SELECT .userid, users.name, SUM(product.quantity*product.price) as total_spent
+FROM buyer 
+JOIN orders ON buyer.id = orders.buyer_id 
+JOIN order_item ON orders.id = order_item.order_id 
+GROUP BY buyer.name 
+ORDER BY total_spent DESC;
+
+
+SELECT u.name, a.userid, o.paymentstate, o.totalamount
+FROM address a
+JOIN deliver_to d ON a.addrid = d.addrid
+JOIN orders o ON d.ordernumber = o.ordernumber
+JOIN users u ON a.userid = u.userid
+GROUP BY u.name, a.userid, o.paymentstate, o.totalamount
+ORDER BY totalamount desc;
 
 
 
@@ -645,7 +683,7 @@ AS Rev_from_top3;
 
 
 
-
+--join conditions
 SELECT u.name, a.userid, a.province, o.paymentstate, o.totalamount
 FROM address a
 JOIN deliver_to d ON a.addrid = d.addrid
@@ -661,8 +699,14 @@ SELECT * FROM deliver_to;
 Insert into deliver_to values (12, 85528797, current_date -2)
 
 
+ALTER TABLE product
+RENAME COLUMN amount TO quantity
 
+SELECT * FROM brand
 
+SELECT * FROM store
+
+SELECT * FROM product
 
 
 
