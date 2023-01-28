@@ -654,23 +654,17 @@ FROM product
 GROUP BY name
 ORDER BY total_quantity DESC;
 
---6. Customer analysis: Who are the top customers?
-SELECT .userid, users.name, SUM(product.quantity*product.price) as total_spent
-FROM buyer 
-JOIN orders ON buyer.id = orders.buyer_id 
-JOIN order_item ON orders.id = order_item.order_id 
-GROUP BY buyer.name 
-ORDER BY total_spent DESC;
+--6. Customer analysis: Who are the top 3 customers based on total amount spent?
 
-
-SELECT u.name, a.userid, o.paymentstate, o.totalamount
+SELECT u.name, SUM(o.totalamount) as total_amount
 FROM address a
 JOIN deliver_to d ON a.addrid = d.addrid
 JOIN orders o ON d.ordernumber = o.ordernumber
 JOIN users u ON a.userid = u.userid
-GROUP BY u.name, a.userid, o.paymentstate, o.totalamount
-ORDER BY totalamount desc;
-
+GROUP BY u.name
+ORDER BY total_amount desc
+OFFSET 0 ROWS 
+FETCH FIRST 3 ROWS ONLY;
 
 
 
