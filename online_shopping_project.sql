@@ -1094,9 +1094,3 @@ SELECT * FROM product
 
 
 
-
-
-
-
-
-
