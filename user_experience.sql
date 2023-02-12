@@ -336,11 +336,9 @@ select * from catalog_info
 
 SELECT 
   target_audience, 
-  string_agg(catalog_name, ', ') as concatenated_catalogs
-FROM 
-  catalog_info
-GROUP BY 
-  target_audience;
+  string_agg(catalog_name, ', ') as catalogs
+FROM catalog_info
+GROUP BY target_audience;
   
   
 
