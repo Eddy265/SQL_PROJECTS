@@ -339,6 +339,8 @@ SELECT
   string_agg(catalog_name, ', ') as catalogs
 FROM catalog_info
 GROUP BY target_audience;
+
+--10
   
   
 
