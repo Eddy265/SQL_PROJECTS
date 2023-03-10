@@ -340,7 +340,7 @@ SELECT
 FROM catalog_info
 GROUP BY target_audience;
 
---10. 
+--10. test 
   
   
 
