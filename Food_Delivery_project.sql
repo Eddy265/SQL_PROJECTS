@@ -540,13 +540,57 @@ SELECT COUNT(DISTINCT(customer_id))
 FROM orders
 WHERE DATE_PART('year',order_date) = DATE_PART('year',CURRENT_DATE);
 
+--23 Determine the hour of the day where orders are received at the highest level
+SELECT 
+  EXTRACT(HOUR FROM order_date) AS hour,
+  COUNT(*) AS order_count
+FROM orders  
+GROUP BY hour
+ORDER BY order_count desc;
 
+--24 Which customers are the most frequent buyers?
+ SELECT c.name, c.customer_id, COUNT(o.order_id)
+ FROM customers c
+ INNER JOIN orders o ON c.customer_id = o.customer_id
+ GROUP BY c.customer_id, c.name
+ ORDER BY COUNT(o.order_id) DESC;
 
+--25 What are the most popular food items among customers?
+ WITH cte AS (
+   SELECT m.item_name, SUM(oi.quantity) AS total_orders 
+   FROM orders o 
+   INNER JOIN order_items oi ON o.order_id = oi.order_id
+   INNER JOIN menu_items m ON oi.item_id = m.item_id
+   GROUP BY m.item_name
+   )
+ SELECT item_name, total_orders FROM cte ORDER BY total_orders DESC LIMIT 10; 
 
+--26 Which month had the highest number of orders?
+SELECT date_trunc('month', order_date) AS month, COUNT(*) AS total_orders
+FROM orders
+GROUP BY 1
+ORDER BY 2 DESC;
 
+--27 Which menu items across all restaurants generate the most revenue?
+SELECT menu_items.item_name, SUM(order_items.quantity * menu_items.price) AS revenue
+FROM order_items 
+JOIN menu_items ON order_items.item_id = menu_items.item_id
+GROUP BY 1
+ORDER BY 2 DESC;
 
+--28 Which zip code has generated the highest total revenue?
+SELECT restaurants.zip_code, SUM(orders.total_amount) AS total_revenue
+FROM restaurants INNER JOIN orders ON 
+    restaurants.restaurant_id = orders.restaurant_id
+GROUP BY 1
+ORDER BY 2 DESC LIMIT 1;
 
-
+--29 Which restaurants receive the most orders and which ones receive the least orders?
+SELECT restaurants.name, COUNT(*) as total_orders_placed 
+FROM orders 
+INNER JOIN restaurants ON orders.restaurant_id = restaurants.restaurant_id 
+GROUP BY restaurants.name 
+ORDER BY total_orders_placed DESC;
 
 
 
