@@ -1,3 +1,11 @@
+/*This food delivery database project is a relational database management system designed to organize and manage data for customers, 
+restaurants, menu items, orders, and order items. This project aims to provide a comprehensive and efficient platform for managing all 
+aspects related to the ordering and delivery of food from restaurants, including customer details, restaurant location and contact details,
+menu item details, and order details. The database schema contains several well-structured tables with primary and foreign keys, making it 
+easy for developers to query the data and generate accurate reports as per business requirements.*/
+
+--Database tables
+
 CREATE TABLE customers (
   customer_id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
@@ -37,7 +45,6 @@ CREATE TABLE order_items (
   order_id INTEGER REFERENCES orders(order_id),
   quantity INTEGER NOT NULL);
 
-SELECT* from orders
 
 --INSERT INTO TABLES
 INSERT INTO customers (name, address, email) VALUES
@@ -309,27 +316,6 @@ VALUES
 (4, 12, 2),
 (9, 13, 2),
 (3, 13, 1);
-
-
-
-SELECT * from menu_items
-
-
-SELECT * FROM customers ORDER BY customer_id DESC
-
-select * from orders 
-
-select * from customers where name = 'Madison Anderson'
-
-SELECT* from order_items
-
-SELECT* from menu_items
-
-
-SELECT COUNT(DISTINCT(customer_id)) from customers
-
-select count(*) from customers
-
 
 
 /*Questions
