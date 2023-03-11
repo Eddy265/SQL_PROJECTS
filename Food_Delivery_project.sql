@@ -264,7 +264,24 @@ INSERT INTO orders (customer_id, restaurant_id, order_date, total_amount) VALUES
 (59, 2, '2023-02-28 21:00:00', 23.75),
 (53, 5, '2023-02-28 13:15:00', 46.55),
 (12, 6, '2023-02-28 18:30:00', 33.90),
-(67, 4, '2023-02-28 20:00:00', 29.20);
+(67, 4, '2023-02-28 20:00:00', 29.20),
+(1, 20, '2022-05-01 12:30:00', 25.98),
+(2, 13, '2022-07-02 14:05:23', 15.50),
+(3, 11, '2022-08-03 17:10:51', 42.35),
+(2, 12, '2022-09-08 19:45:30', 19.20),
+(3, 13, '2022-07-09 21:15:00', 32.80),
+(4, 11, '2022-08-12 16:55:13', 27.95),
+(5, 12, '2022-12-15 18:30:00', 10.00),
+(6, 15, '2022-11-20 10:15:00', 17.25),
+(7, 16, '2022-10-22 13:00:57', 24.80),
+(8, 14, '2022-12-25 11:45:00', 21.45),
+(9, 19, '2022-10-29 14:30:00', 15.75),
+(4, 18, '2022-10-02 17:20:00', 29.40),
+(5, 10, '2022-11-05 21:00:00', 13.75),
+(6, 9, '2022-08-07 18:10:45', 28.65),
+(7, 16, '2022-09-10 15:45:00', 16.95),
+(8, 18, '2022-09-13 12:30:00', 20.80);
+
 
 --INSERT INTO ORDER_ITEMS
 INSERT INTO order_items (item_id, order_id, quantity)
@@ -315,7 +332,24 @@ VALUES
 (8, 12, 1),
 (4, 12, 2),
 (9, 13, 2),
-(3, 13, 1);
+(3, 13, 1),
+(20, 12, 5),
+(12, 14, 10),
+(16, 12, 8),
+(17, 21, 11),
+(14, 12, 12),
+(15, 23, 4),
+(16, 25, 6),
+(11, 34, 2),
+(12, 32, 1),
+(17, 31, 2),
+(19, 13, 3),
+(8, 14, 1),
+(9, 16, 6),
+(7, 20, 6),
+(9, 15, 8),
+(14, 50, 3),
+(16, 64, 2);
 
 
 /*Questions
@@ -357,7 +391,7 @@ ORDER BY total_sales DESC
 LIMIT 1;
 
 --5 Which restaurant has the highest revenue per order on average?
-SELECT r.name, COUNT(DISTINCT o.order_id) as order_count, SUM(oi.quantity*mi.price) as total_revenue, ROUND(AVG(oi.quantity*mi.price), 2) as avg_revenue
+SELECT r.name restaurant, COUNT(DISTINCT o.order_id) as order_count, SUM(oi.quantity*mi.price) as total_revenue, ROUND(AVG(oi.quantity*mi.price), 2) as avg_revenue
 FROM order_items oi 
 JOIN menu_items mi ON oi.item_id = mi.item_id 
 JOIN orders o ON oi.order_id = o.order_id
@@ -424,17 +458,11 @@ ORDER BY total_ordered DESC
 LIMIT 10;
 
 --13 Which restaurants have not received any orders in the last week?
-SELECT 
-    restaurant_id, name restaurant, address_line1
-FROM 
-    restaurants r
-    LEFT JOIN orders USING (restaurant_id)
-WHERE 
-    order_date >= CURRENT_DATE - INTERVAL '7 days'
-GROUP BY 
-    restaurant_id, name, address_line1, state, city, zip_code, address_line2
-HAVING 
-    COUNT(order_id) = 0;
+SELECT r.name restaurant, COUNT(order_id) num_orders
+FROM restaurants r 
+LEFT JOIN orders o ON r.restaurant_id = o.restaurant_id AND o.order_date >= now() - interval '7 days'
+WHERE o.order_id IS NULL
+GROUP BY r.name;
 
 --14 What is the average amount spent per order at each restaurant?
 SELECT name restaurant, ROUND(AVG(total_amount), 2) AS avg_order_total
@@ -466,18 +494,51 @@ JOIN restaurants r ON o.restaurant_id = r.restaurant_id
 WHERE o.order_date BETWEEN '2022-07-21' AND '2023-01-21'
 GROUP BY r.name;
 
+--18 Which restaurant has received the most orders?
+SELECT r.restaurant_id, r.name, COUNT(o.order_id) AS num_orders
+FROM restaurants r
+LEFT JOIN orders o ON r.restaurant_id = o.restaurant_id
+GROUP BY r.restaurant_id, r.name
+ORDER BY num_orders desc
+LIMIT 1;
 
 
+--19 Which restaurants received orders in the 3 week?
+SELECT r.name restaurant, COUNT(order_id) num_orders
+FROM restaurants r 
+LEFT JOIN orders o ON r.restaurant_id = o.restaurant_id AND o.order_date >= now() - interval '21 days'
+WHERE o.order_id IS NOT NULL
+GROUP BY r.name
+ORDER BY num_orders desc;
 
-SELECT * FROM menu_items
 
-SELECT DISTINCT(name) from RESTAURANTS
-
-
-
+--20 Total number of restaurants
+SELECT COUNT(DISTINCT(name)) 
+FROM restaurants
 
 
+--21 which customers have not placed any order this year?
+SELECT c.*
+FROM customers c
+WHERE NOT EXISTS (
+  SELECT *
+  FROM orders o
+  WHERE o.customer_id = c.customer_id 
+    AND DATE_TRUNC('year', o.order_date) = DATE_TRUNC('year', CURRENT_DATE)
+);
 
+--21 Number of customers that have not placed any order this year?
+SELECT COUNT(*)
+FROM customers
+WHERE customer_id NOT IN (
+  SELECT customer_id FROM orders
+  WHERE DATE_PART('year',order_date) = DATE_PART('year',CURRENT_DATE)
+);
+
+--22 How many have placed orders this year?
+SELECT COUNT(DISTINCT(customer_id))
+FROM orders
+WHERE DATE_PART('year',order_date) = DATE_PART('year',CURRENT_DATE);
 
 
 
