@@ -16457,7 +16457,6 @@ group by channel
 /* BUSINESS QUESTIONS*/
 
 --1. Retrieve the total revenue for each sales rep
-
 SELECT sales_reps.name, SUM(orders.total_amt_usd) AS total_revenue
 FROM sales_reps
 JOIN accounts ON sales_reps.id = accounts.sales_rep_id
@@ -16469,5 +16468,160 @@ ORDER BY total_revenue desc;
 SELECT channel, SUM(total_amt_usd) AS total_revenue
 FROM web_events
 JOIN orders ON web_events.account_id = orders.account_id
+GROUP BY channel
+ORDER BY total_revenue desc;
+
+--3. What is the average order value for each product type?
+SELECT 'standard' AS product_type, ROUND(AVG(standard_amt_usd),2) AS avg_order_value
+FROM orders
+UNION
+SELECT 'gloss', ROUND(AVG(gloss_amt_usd),2)
+FROM orders
+UNION
+SELECT 'poster', ROUND(AVG(poster_amt_usd),2)
+FROM orders;
+
+--OR
+
+SELECT ROUND(AVG(standard_amt_usd),2) as standard, 
+ROUND(AVG(gloss_amt_usd),2) as gloss, 
+ROUND(AVG(poster_amt_usd),2) as poster
+from orders
+
+
+--4. Which region has the highest total revenue?
+SELECT region.name, SUM(orders.total_amt_usd) AS total_revenue
+FROM region
+JOIN sales_reps ON region.id = sales_reps.region_id
+JOIN accounts ON sales_reps.id = accounts.sales_rep_id
+JOIN orders ON accounts.id = orders.account_id
+GROUP BY region.name
+ORDER BY total_revenue DESC
+LIMIT 1;
+
+
+--5. What is the average number of web events per account?
+SELECT CEIL(AVG(num_web_events)) AS avg_num_web_events_per_account
+FROM (SELECT account_id, COUNT(*) AS num_web_events
+FROM web_events
+GROUP BY account_id) subquery;
+
+--with cte
+with cte as (SELECT account_id, COUNT(*) AS num_web_events
+FROM web_events
+GROUP BY account_id) SELECT CEIL(AVG(num_web_events)) AS avg_num_web_events_per_account
+FROM cte
+
+
+--6. Which accounts have the highest total revenue?
+SELECT accounts.name, SUM(orders.total_amt_usd) AS total_revenue
+FROM accounts
+JOIN orders ON accounts.id = orders.account_id
+GROUP BY accounts.name
+ORDER BY total_revenue DESC
+LIMIT 1;
+
+
+--7. What is the distribution of products sold (in terms of quantity) across different channels?
+SELECT channel, SUM(standard_qty) AS standard_qty, SUM(gloss_qty) AS gloss_qty, SUM(poster_qty) AS poster_qty
+FROM web_events
+JOIN orders ON web_events.account_id = orders.account_id
 GROUP BY channel;
+
+
+--8. What is the average order value for each region?
+SELECT region.name, ROUND(AVG(orders.total_amt_usd), 2) AS avg_order_value
+FROM region
+JOIN sales_reps ON region.id = sales_reps.region_id
+JOIN accounts ON sales_reps.id = accounts.sales_rep_id
+JOIN orders ON accounts.id = orders.account_id
+GROUP BY region.name;
+
+
+--9. Which channel has the highest conversion rate (i.e. the highest percentage of web events that result in an order)?
+SELECT channel, COUNT(DISTINCT orders.account_id) AS num_orders, COUNT(*) AS num_web_events, COUNT(DISTINCT orders.account_id) * 100.0 / COUNT(*) AS conversion_rate
+FROM web_events
+LEFT JOIN orders ON web_events.account_id = orders.account_id
+GROUP BY channel
+ORDER BY conversion_rate DESC;
+
+
+--10. At which month of the year does hp make the highest sales?
+SELECT EXTRACT(MONTH FROM occurred_at) AS month, SUM(total_amt_usd) AS total_sales
+FROM accounts
+JOIN orders ON accounts.id = orders.account_id
+WHERE accounts.name = 'HP'
+GROUP BY month
+ORDER BY total_sales DESC
+LIMIT 1;
+
+--
+--with the month name
+SELECT TO_CHAR(occurred_at, 'Month') AS month_name, SUM(total_amt_usd) AS total_sales
+FROM accounts
+JOIN orders ON accounts.id = orders.account_id
+WHERE accounts.name = 'HP'
+GROUP BY month_name
+ORDER BY total_sales DESC
+LIMIT 1;
+
+
+--11. which product does the customers order the most?
+SELECT 
+    CASE
+        WHEN standard_qty >= gloss_qty AND standard_qty >= poster_qty THEN 'Standard'
+        WHEN gloss_qty >= standard_qty AND gloss_qty >= poster_qty THEN 'Gloss'
+        ELSE 'Poster'
+    END AS most_ordered_product,
+    SUM(standard_qty + gloss_qty + poster_qty) AS total_orders
+FROM orders
+GROUP BY most_ordered_product
+ORDER BY total_orders DESC
+LIMIT 1;
+
+--
+--without case statement
+SELECT 
+    product_name,
+    SUM(qty) AS total_orders
+FROM (
+    SELECT account_id, 'Standard' AS product_name, standard_qty AS qty FROM orders
+    UNION ALL
+    SELECT account_id, 'Gloss' AS product_name, gloss_qty AS qty FROM orders
+    UNION ALL
+    SELECT account_id, 'Poster' AS product_name, poster_qty AS qty FROM orders
+) subquery
+GROUP BY product_name
+ORDER BY total_orders DESC
+LIMIT 1;
+
+
+--12. how many orders does coca cola have and who is the sales rep?
+SELECT COUNT(*) AS num_orders, sales_reps.name AS sales_rep
+FROM accounts
+JOIN orders ON accounts.id = orders.account_id
+JOIN sales_reps ON accounts.sales_rep_id = sales_reps.id
+WHERE accounts.name = 'Coca Cola'
+GROUP BY sales_reps.name;
+
+
+--13. In year 2016, which channel generated the most revenue?
+SELECT web_events.channel, SUM(orders.total_amt_usd) AS total_revenue
+FROM web_events
+JOIN orders ON web_events.account_id = orders.account_id
+WHERE EXTRACT(YEAR FROM web_events.occurred_at) = 2016
+GROUP BY web_events.channel
+ORDER BY total_revenue DESC
+LIMIT 1;
+
+
+--14. 
+
+
+
+
+
+
+
+
 
