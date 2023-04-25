@@ -16566,7 +16566,7 @@ ORDER BY total_sales DESC
 LIMIT 1;
 
 
---11. which product does the customers order the most?
+--11. Which product does the customers order the most?
 SELECT 
     CASE
         WHEN standard_qty >= gloss_qty AND standard_qty >= poster_qty THEN 'Standard'
@@ -16579,8 +16579,8 @@ GROUP BY most_ordered_product
 ORDER BY total_orders DESC
 LIMIT 1;
 
---
---without case statement
+-- OR
+
 SELECT 
     product_name,
     SUM(qty) AS total_orders
@@ -16594,6 +16594,21 @@ FROM (
 GROUP BY product_name
 ORDER BY total_orders DESC
 LIMIT 1;
+
+-- OR
+
+SELECT product, quantity from (
+SELECT 'standard' AS product, SUM(standard_qty) AS quantity
+FROM orders
+UNION
+SELECT 'gloss' AS product, SUM(gloss_qty) AS quantity
+FROM orders
+UNION 
+SELECT 'poster' AS product, SUM(poster_qty) AS quantity
+FROM orders) sub
+GROUP BY product, quantity
+ORDER BY quantity DESC
+LIMIT 1
 
 
 --12. how many orders does coca-cola have and who is the sales rep?
