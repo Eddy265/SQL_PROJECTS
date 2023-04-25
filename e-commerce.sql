@@ -16596,12 +16596,12 @@ ORDER BY total_orders DESC
 LIMIT 1;
 
 
---12. how many orders does coca cola have and who is the sales rep?
+--12. how many orders does coca-cola have and who is the sales rep?
 SELECT COUNT(*) AS num_orders, sales_reps.name AS sales_rep
 FROM accounts
 JOIN orders ON accounts.id = orders.account_id
 JOIN sales_reps ON accounts.sales_rep_id = sales_reps.id
-WHERE accounts.name = 'Coca Cola'
+WHERE accounts.name = 'Coca-Cola'
 GROUP BY sales_reps.name;
 
 
