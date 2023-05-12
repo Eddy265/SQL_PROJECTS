@@ -11,15 +11,7 @@ connected to the database. Using the NPS framework, I calculated the percentage 
 rated the product 0 to 6), and passives (customers who rated the product 7 or 8) for each of the 10 least performing products.
 My analysis showed that the NPS scores for the 10 products ranged from -60% to 35.71%, indicating that most of the customers were dissatisfied with these products. 
 I also found that the percentage of passive respondents for each product varied between 25% to 50%, indicating that these customers are not completely satisfied with 
-the product and may switch to other products in the future.
-
-Based on these findings, I recommended that the company take appropriate actions to improve the quality of these products and also incentivize customers to continue
-purchasing them. For example, the company can consider providing discounts or loyalty points to customers who continue to purchase these products despite their low 
-satisfaction levels.
-
-Overall, this project helped the company identify the least performing products and understand the reasons behind the low customer satisfaction levels. The NPS 
-framework provided a quantitative measure of customer satisfaction and helped in prioritizing the products that require immediate attention.*/
-
+the product and may switch to other products in the future.*/
 
 
 
@@ -72,6 +64,15 @@ SELECT
   ROUND(100 * (promoters - detractors) / total_responses::numeric, 2) || '%' AS nps_score,
   ROUND(100 * passives / total_responses::numeric, 2) || '%' AS passive_respondents
 FROM nps_summary;
+
+
+/*Based on these findings, I recommended that the company take appropriate actions to improve the quality of these products and also incentivize customers to continue
+purchasing them. For example, the company can consider providing discounts or loyalty points to customers who continue to purchase these products despite their low 
+satisfaction levels.
+
+Overall, this project helped the company identify the least performing products and understand the reasons behind the low customer satisfaction levels. The NPS 
+framework provided a quantitative measure of customer satisfaction and helped in prioritizing the products that require immediate attention.*/
+
 
 
 
