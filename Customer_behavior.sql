@@ -1,14 +1,11 @@
 
-/* CUSTOMER BEHAVIOUR ANALYSIS
-The LAG function in PostgreSQL allows you to access the value of a column in a previous row 
-in relation to the current row. This function can be useful in performing various types of analysis 
-such as trend analysis, demographic analysis and income analysis. By comparing values of a column in
-the current row to the previous row, you can identify patterns and trends in the data. In the examples 
-provided above, we demonstrated how the LAG function can be used to perform trend analysis by looking 
-at the difference in purchase amount, demographic analysis by looking at the difference in age with the 
-same gender and income analysis by looking at the difference in salary with the same age. These are just
-a few examples of how the LAG function can be used to gain insights from the data, depending on the data 
-and the business problem, there can be different ways to use the LAG function to perform analysis.
+/* Comparative Analysis of Customer Purchase Patterns: Unveiling Customer Behavior Insights
+Understanding customer behavior is crucial for businesses to make informed decisions and devise effective strategies. One valuable aspect of customer behavior analysis is comparing the purchase patterns over time. By examining the purchase pattern, businesses can gain valuable insights into customer trends and behaviors.
+This project focuses on conducting a comprehensive analysis of customer purchase patterns and fluctuations in customer behavior. These insights can help businesses tailor their marketing efforts, optimize their retention strategies, and enhance customer satisfaction.
+In addition, It examines customer retention rates, which allows businesses to detect any seasonal trends in customer retention rates, enabling them to plan and allocate resources accordingly.
+Furthermore, the project delves into age-based purchasing patterns, examining which age brackets make the most and least purchases. This analysis enables businesses to identify specific age groups that exhibit higher or lower purchase behavior, facilitating targeted marketing and sales efforts. By understanding the purchasing preferences of different age groups, businesses can tailor their strategies and offer to effectively engage and retain customers.
+Finally, the project investigates the average purchase value of customers within cohorts, focusing specifically on the year 2021. This analysis helps businesses comprehend how customer behavior and purchase habits evolve over time within different cohorts. By identifying trends and changes in average purchase values, businesses can make data-driven decisions to improve their marketing strategies, optimize customer engagement, and enhance overall customer lifetime value.
+
 
 QUESTIONS
 
@@ -22,7 +19,7 @@ SELECT user_id, date, purchase_amount,
        purchase_amount - LAG(purchase_amount) OVER (PARTITION BY user_id ORDER BY date) as amount_difference
 FROM public.customer_seg;
 
-/* 2. Customer retention rate (cohort analysis).
+/* 2. Customer retention rate.
  This information is useful for businesses to understand how well they are retaining customers over time and identify any patterns
  or trends in customer retention. This can help businesses make informed decisions about their marketing and retention strategies, 
  and identify areas for improvement. Additionally, by analyzing customer retention by acquisition month, businesses can also identify
