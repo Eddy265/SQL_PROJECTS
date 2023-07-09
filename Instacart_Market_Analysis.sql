@@ -1,52 +1,123 @@
-CREATE TABLE aisles (
-  aisle_id INT,
-  aisle VARCHAR(255),
-  PRIMARY KEY (aisle_id)
-);
+-- Table: public.aisles
+
+-- DROP TABLE IF EXISTS public.aisles;
+
+CREATE TABLE IF NOT EXISTS public.aisles
+(
+    aisle_id integer NOT NULL,
+    aisle character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT aisles_pkey PRIMARY KEY (aisle_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.aisles
+    OWNER to postgres;
+-- Index: ind_aisle_id
+
+-- DROP INDEX IF EXISTS public.ind_aisle_id;
+
+CREATE INDEX IF NOT EXISTS ind_aisle_id
+    ON public.aisles USING btree
+    (aisle_id ASC NULLS LAST)
+    TABLESPACE pg_default;
 
 
-CREATE TABLE department (
-  department_id INT,
-  department VARCHAR(255),
-  PRIMARY KEY (department_id)
-);
+-- Table: public.department
+
+-- DROP TABLE IF EXISTS public.department;
+
+CREATE TABLE IF NOT EXISTS public.department
+(
+    department_id integer NOT NULL,
+    department character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT department_pkey PRIMARY KEY (department_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.department
+    OWNER to postgres;
+-- Index: ind_dept_id
+
+-- DROP INDEX IF EXISTS public.ind_dept_id;
+
+CREATE INDEX IF NOT EXISTS ind_dept_id
+    ON public.department USING btree
+    (department_id ASC NULLS LAST)
+    TABLESPACE pg_default;
 
 
-CREATE TABLE products (
-  product_id INT,
-  product_name VARCHAR(255),
-  aisle_id INT,
-  department_id INT,
-  PRIMARY KEY (product_id),
-  FOREIGN KEY (aisle_id) REFERENCES aisles(aisle_id),
-  FOREIGN KEY (department_id) REFERENCES department(department_id)
-);
+-- Table: public.products
+
+-- DROP TABLE IF EXISTS public.products;
+CREATE TABLE IF NOT EXISTS public.products
+(
+    product_id bigint NOT NULL,
+    product_name text COLLATE pg_catalog."default",
+    aisle_id bigint,
+    department_id bigint,
+    unit_price integer,
+    unit_cost numeric,
+    CONSTRAINT products_pkey PRIMARY KEY (product_id),
+    CONSTRAINT products_aisle_id_fkey FOREIGN KEY (aisle_id)
+        REFERENCES public.aisles (aisle_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT products_department_id_fkey FOREIGN KEY (department_id)
+        REFERENCES public.department (department_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.products
+    OWNER to postgres;
+-- Index: ind_product_id
+
+-- DROP INDEX IF EXISTS public.ind_product_id;
+
+CREATE INDEX IF NOT EXISTS ind_product_id
+    ON public.products USING btree
+    (product_id ASC NULLS LAST)
+    TABLESPACE pg_default;
 
 
-CREATE TABLE orders (
-  order_id BIGINT,
-  user_id bigint,
-  eval_set VARCHAR(255),
-  order_number BIGINT,
-  order_dow INT,
-  order_hour_of_day INT,
-  days_since_prior_order INT,
-  PRIMARY KEY (order_id)
-);
+-- Table: public.orders
 
-CREATE TABLE order_products_prior (
-  order_id BIGINT,
-  product_id BIGINT,
-  add_to_cart_order INT,
-  reordered VARCHAR(255),
-  PRIMARY KEY (order_id, product_id),
-  FOREIGN KEY (order_id) REFERENCES orders(order_id),
-  FOREIGN KEY (product_id) REFERENCES products(product_id)
-);
+-- DROP TABLE IF EXISTS public.orders;
 
-ALTER TABLE products
-ADD COLUMN order_id BIGINT,
-ADD FOREIGN KEY (order_id) REFERENCES orders(order_id);
+CREATE TABLE IF NOT EXISTS public.orders
+(
+    order_id bigint NOT NULL,
+    user_id bigint,
+    order_dow integer,
+    order_hour_of_day integer,
+    days_since_prior_order integer,
+    product_id bigint,
+    quantity integer,
+    order_date date,
+    order_status character varying(25) COLLATE pg_catalog."default",
+    CONSTRAINT orders_pkey PRIMARY KEY (order_id),
+    CONSTRAINT fk_product_id FOREIGN KEY (product_id)
+        REFERENCES public.products (product_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.orders
+    OWNER to postgres;
+-- Index: ind_order_id
+
+-- DROP INDEX IF EXISTS public.ind_order_id;
+
+CREATE INDEX IF NOT EXISTS ind_order_id
+    ON public.orders USING btree
+    (order_id ASC NULLS LAST)
+    TABLESPACE pg_default;
 
 
 
