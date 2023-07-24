@@ -116,6 +116,7 @@ ORDER BY
 LIMIT 10;
 
 
+
 --3. What is the average time between orders for each user?
 SELECT user_id, ROUND(AVG(days_since_prior_order)) AS avg_days_between_orders
 FROM orders
