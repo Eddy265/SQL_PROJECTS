@@ -6,34 +6,51 @@ CREATE TABLE IF NOT EXISTS aisles
 );
 
 
-CREATE TABLE department (
-  department_id INT,
-  department VARCHAR(255),
-  PRIMARY KEY (department_id)
+CREATE TABLE IF NOT EXISTS department
+(
+    department_id integer NOT NULL,
+    department character varying(255),
+    CONSTRAINT department_pkey PRIMARY KEY (department_id)
+);
+
+CREATE TABLE IF NOT EXISTS products
+(
+    product_id bigint NOT NULL,
+    product_name text,
+    aisle_id bigint,
+    department_id bigint,
+    unit_price integer,
+    unit_cost numeric,
+    CONSTRAINT products_pkey PRIMARY KEY (product_id),
+    CONSTRAINT products_aisle_id_fkey FOREIGN KEY (aisle_id)
+        REFERENCES public.aisles (aisle_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT products_department_id_fkey FOREIGN KEY (department_id)
+        REFERENCES public.department (department_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
 
-CREATE TABLE products (
-  product_id INT,
-  product_name VARCHAR(255),
-  aisle_id INT,
-  department_id INT,
-  PRIMARY KEY (product_id),
-  FOREIGN KEY (aisle_id) REFERENCES aisles(aisle_id),
-  FOREIGN KEY (department_id) REFERENCES department(department_id)
+CREATE TABLE IF NOT EXISTS orders
+(
+    order_id bigint NOT NULL,
+    user_id bigint,
+    order_dow integer,
+    order_hour_of_day integer,
+    days_since_prior_order integer,
+    product_id bigint,
+    quantity integer,
+    order_date date,
+    order_status character varying(25),
+    CONSTRAINT orders_pkey PRIMARY KEY (order_id),
+    CONSTRAINT fk_product_id FOREIGN KEY (product_id)
+        REFERENCES public.products (product_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
-
-CREATE TABLE orders (
-  order_id BIGINT,
-  user_id bigint,
-  eval_set VARCHAR(255),
-  order_number BIGINT,
-  order_dow INT,
-  order_hour_of_day INT,
-  days_since_prior_order INT,
-  PRIMARY KEY (order_id)
-);
 
 CREATE TABLE order_products_prior (
   order_id BIGINT,
@@ -44,76 +61,6 @@ CREATE TABLE order_products_prior (
   FOREIGN KEY (order_id) REFERENCES orders(order_id),
   FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
-
-ALTER TABLE products
-ADD COLUMN order_id BIGINT,
-ADD FOREIGN KEY (order_id) REFERENCES orders(order_id);
-
-
-
-SELECT COUNT(*) FROM orders;
-SELECT COUNT(*) FROM order_products_train;
-SELECT COUNT(*) FROM products;
-SELECT COUNT(*) FROM aisles;
-SELECT COUNT(*) FROM department;
-
-
---JOIN ALL 
-SELECT *
-FROM orders o
-  JOIN order_products_train op ON o.order_id = op.order_id
-  JOIN products p ON op.product_id = p.product_id
-  JOIN aisles a ON p.aisle_id = a.aisle_id
-  JOIN department d ON p.department_id = d.department_id;
-
-
---order and product
-SELECT
-  o.order_id,
-  p.product_id,
-  p.product_name,
-  p.aisle_id,
-  p.department_id
-FROM
-  orders o
-  JOIN order_products_train op ON o.order_id = op.order_id
-  JOIN products p ON op.product_id = p.product_id
-
-
-
---1. What are the top 10 most popular products by department?
-SELECT
-  d.department,
-  p.product_name,
-  COUNT(*) AS total_orders
-FROM
-  orders o
-  JOIN order_products_train op ON o.order_id = op.order_id
-  JOIN products p ON op.product_id = p.product_id
-  JOIN department d ON p.department_id = d.department_id
-GROUP BY
-  d.department,
-  p.product_name
-ORDER BY
-  d.department,
-  total_orders DESC
-LIMIT 10;
-
-
---2. What are the top 10 products that are most often reordered?
-SELECT
-  p.product_name,
-  COUNT(*) AS total_reordered
-FROM
-  order_products_train op
-  JOIN products p ON op.product_id = p.product_id
-WHERE
-  op.reordered = '1'
-GROUP BY
-  p.product_name
-ORDER BY
-  total_reordered DESC
-LIMIT 10;
 
 
 
