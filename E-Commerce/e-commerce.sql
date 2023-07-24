@@ -1,45 +1,70 @@
-CREATE TABLE web_events (
-	id integer,
-	account_id integer,
-	occurred_at timestamp,
-	channel bpchar
+/* CREATE DATABASE*/
+
+CREATE TABLE IF NOT EXISTS public.accounts
+(
+    id integer NOT NULL,
+    name bpchar COLLATE pg_catalog."default",
+    website bpchar COLLATE pg_catalog."default",
+    lat numeric(11,8),
+    "long" numeric(11,8),
+    primary_poc bpchar COLLATE pg_catalog."default",
+    sales_rep_id integer,
+    CONSTRAINT pk_accounts PRIMARY KEY (id),
+    CONSTRAINT fk_accounts_sales_rep_id FOREIGN KEY (sales_rep_id)
+        REFERENCES public.sales_reps (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
-CREATE TABLE sales_reps (
-	id integer,
-	name bpchar,
-	region_id integer
+CREATE TABLE IF NOT EXISTS public.orders
+(
+    id integer,
+    account_id integer,
+    occurred_at timestamp without time zone,
+    standard_qty integer,
+    gloss_qty integer,
+    poster_qty integer,
+    total integer,
+    standard_amt_usd numeric(10,2),
+    gloss_amt_usd numeric(10,2),
+    poster_amt_usd numeric(10,2),
+    total_amt_usd numeric(10,2),
+    CONSTRAINT fk_orders_account_id FOREIGN KEY (account_id)
+        REFERENCES public.accounts (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
-CREATE TABLE region (
-	id integer,
-	name bpchar
+CREATE TABLE IF NOT EXISTS public.region
+(
+    id integer NOT NULL,
+    name bpchar COLLATE pg_catalog."default",
+    CONSTRAINT pk_region PRIMARY KEY (id)
 );
 
-CREATE TABLE orders (
-	id integer,
-	account_id integer,
-	occurred_at timestamp,
-	standard_qty integer,
-	gloss_qty integer,
-	poster_qty integer,
-	total integer,
-	standard_amt_usd numeric(10,2),
-	gloss_amt_usd numeric(10,2),
-	poster_amt_usd numeric(10,2),
-	total_amt_usd numeric(10,2)
+CREATE TABLE IF NOT EXISTS public.sales_reps
+(
+    id integer NOT NULL,
+    name bpchar COLLATE pg_catalog."default",
+    region_id integer,
+    CONSTRAINT pk_sales_reps PRIMARY KEY (id),
+    CONSTRAINT fk_sales_reps_region_id FOREIGN KEY (region_id)
+        REFERENCES public.region (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
-CREATE TABLE accounts (
-	id integer,
-	name bpchar,
-	website bpchar,
-	lat numeric(11,8),
-	long numeric(11,8),
-	primary_poc bpchar,
-	sales_rep_id integer
+CREATE TABLE IF NOT EXISTS public.web_events
+(
+    id integer,
+    account_id integer,
+    occurred_at timestamp without time zone,
+    channel bpchar COLLATE pg_catalog."default",
+    CONSTRAINT fk_web_events_account_id FOREIGN KEY (account_id)
+        REFERENCES public.accounts (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
-
 
 INSERT INTO web_events VALUES (1,1001,'2015-10-06 17:13:58','direct');
 INSERT INTO web_events VALUES (2,1001,'2015-11-05 03:08:26','direct');
