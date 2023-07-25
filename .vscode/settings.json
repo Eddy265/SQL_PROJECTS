@@ -69,6 +69,16 @@
             "database": "website_engagement_analysis",
             "username": "postgres",
             "password": "Mangotree"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Postgres",
+            "database": "Instacart",
+            "username": "postgres",
+            "password": "Mangotree"
         }
     ]
 }

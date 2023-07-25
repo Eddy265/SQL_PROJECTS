@@ -1,3 +1,5 @@
+--DATABASE MODEL
+
 CREATE TABLE IF NOT EXISTS aisles
 (
     aisle_id integer NOT NULL,
@@ -51,101 +53,110 @@ CREATE TABLE IF NOT EXISTS orders
         ON DELETE NO ACTION
 );
 
+--BUSINESS QUESTIONS
 
-CREATE TABLE order_products_prior (
-  order_id BIGINT,
-  product_id BIGINT,
-  add_to_cart_order INT,
-  reordered VARCHAR(255),
-  PRIMARY KEY (order_id, product_id),
-  FOREIGN KEY (order_id) REFERENCES orders(order_id),
-  FOREIGN KEY (product_id) REFERENCES products(product_id)
-);
+--1. What is the distribution of orders by day of week and hour of day?
+SELECT 
+    CASE 
+        WHEN order_dow = 0 THEN 'Sunday'
+        WHEN order_dow = 1 THEN 'Monday'
+        WHEN order_dow = 2 THEN 'Tuesday'
+        WHEN order_dow = 3 THEN 'Wednesday'
+        WHEN order_dow = 4 THEN 'Thursday'
+        WHEN order_dow = 5 THEN 'Friday'
+        WHEN order_dow = 6 THEN 'Saturday'
+    END AS day_of_week,
+    order_hour_of_day,
+    COUNT(*) AS order_count
+FROM orders
+GROUP BY order_dow, order_hour_of_day
+ORDER BY order_dow, order_hour_of_day;
 
 
---3. What is the average time between orders for each user?
-SELECT user_id, ROUND(AVG(days_since_prior_order)) AS avg_days_between_orders
+--2. What is the average basket size for each department?
+SELECT d.department_id, d.department, AVG(o.quantity) AS avg_basket_size
+FROM department d
+LEFT JOIN products p ON d.department_id = p.department_id
+LEFT JOIN orders o ON p.product_id = o.product_id
+GROUP BY d.department_id, d.department
+ORDER BY avg_basket_size DESC;
+
+
+--3. What are the most popular products purchased by customers?
+
+SELECT p.product_id, p.product_name, SUM(o.quantity) AS total_quantity_purchased
+FROM products p
+JOIN orders o ON p.product_id = o.product_id
+GROUP BY p.product_id, p.product_name
+ORDER BY total_quantity_purchased DESC;
+
+
+--4. How frequently do customers place orders on Instacart?
+SELECT user_id, 
+       ROUND(AVG(days_since_prior_order),2) AS avg_days_between_orders,
+       COUNT(*) AS total_orders
 FROM orders
 GROUP BY user_id
-ORDER BY avg_days_between_orders DESC;
+ORDER BY avg_days_between_orders;
+
+--5. What is the average basket size for customers?
+SELECT user_id, 
+       ROUND(AVG(quantity),2) AS avg_basket_size
+FROM orders
+GROUP BY user_id
+ORDER BY avg_basket_size DESC;
 
 
---4. What is the distribution of orders by day of week and hour of day?
-SELECT
-  order_dow day_of_the_week,
-  order_hour_of_day,
-  COUNT(*) AS total_orders
-FROM
-  orders
-GROUP BY
-  order_dow,
-  order_hour_of_day
-ORDER BY total_orders desc;
-
-
-SELECT DISTINCT(COUNT(user_id)) FROM orders
-
---5. What is the average basket size (number of items per order) for each department?
-SELECT
-  d.department,
-  ROUND(AVG(op.add_to_cart_order)) AS avg_basket_size
-FROM
-  orders o
-  JOIN order_products_train op ON o.order_id = op.order_id
-  JOIN products p ON op.product_id = p.product_id
-  JOIN department d ON p.department_id = d.department_id
-GROUP BY
-  d.department
-ORDER BY avg_basket_size desc;
-
-
---6. What are the most popular products purchased by customers?
-
-SELECT p.product_name, COUNT(*) as num_orders
-FROM orders o
-JOIN order_products_train opp ON o.order_id = opp.order_id
-JOIN products p ON opp.product_id = p.product_id
-GROUP BY p.product_name
-ORDER BY num_orders DESC
-LIMIT 10;
-
-
---7. How frequently do customers place orders on Instacart?
-SELECT ROUND(AVG(days_since_prior_order)) as avg_days_since_order 
-FROM orders;
-
---8. What is the average basket size (number of products per order) for Instacart customers?
-SELECT ROUND(AVG(num_products)) as avg_basket_size 
-FROM (SELECT order_id, COUNT(*) as num_products FROM order_products_train GROUP BY order_id) as baskets;
-
-
---9. What are the most common days of the week for orders to be placed?
-SELECT order_dow, COUNT(*) as order_count
+--6. What are the most common days of the week for orders to be placed?
+SELECT 
+    CASE 
+        WHEN order_dow = 0 THEN 'Sunday'
+        WHEN order_dow = 1 THEN 'Monday'
+        WHEN order_dow = 2 THEN 'Tuesday'
+        WHEN order_dow = 3 THEN 'Wednesday'
+        WHEN order_dow = 4 THEN 'Thursday'
+        WHEN order_dow = 5 THEN 'Friday'
+        WHEN order_dow = 6 THEN 'Saturday'
+    END AS day_of_week,
+    COUNT(*) AS order_count
 FROM orders
 GROUP BY order_dow
 ORDER BY order_count DESC;
 
 
---10. Retrieve the product names and their corresponding aisle names for products that have a unit price greater than the average unit price of all products in the database.
-SELECT product_name, aisle, unit_price  
+--7. Retrieve the product names and their corresponding aisle names for products that have a unit price greater than the average unit price of all products in the database.
+WITH avg_unit_price AS (
+    SELECT AVG(unit_price) AS avg_price
+    FROM products
+)
+SELECT p.product_name, a.aisle
 FROM products p
 JOIN aisles a ON p.aisle_id = a.aisle_id
-WHERE unit_price > (SELECT AVG(unit_price) FROM products);
+CROSS JOIN avg_unit_price
+WHERE p.unit_price > avg_unit_price.avg_price;
 
---11. Retrieve the product name and unit price of the products with the highest unit price in each department.
-SELECT department, product_name, unit_price
-FROM products p
-JOIN department d ON p.department_id = d.department_id
-WHERE unit_price = (SELECT MAX(unit_price) FROM products WHERE department_id = p.department_id);
 
---12. Retrieve the user_id and total number of orders for users who have placed more than 10 orders.
+--8. Retrieve the product name and unit price of the products with the highest unit price in each department.
+WITH ranked_products AS (
+    SELECT
+        product_id,
+        product_name,
+        unit_price,
+        department_id,
+        ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY unit_price DESC) AS rank
+    FROM products
+)
+SELECT product_name, unit_price, department_id
+FROM ranked_products
+WHERE rank = 1;
+
+--9. Retrieve the user_id and total number of orders for users who have placed more than 10 orders.
 SELECT user_id, COUNT(*) AS total_orders
 FROM orders
-WHERE user_id IN (SELECT user_id FROM orders GROUP BY user_id HAVING COUNT(*) > 10)
-GROUP BY user_id;
+GROUP BY user_id
+HAVING COUNT(*) > 10;
 
-
---13. Write a query to retrieve the product name, aisle, and department name for all products with a unit price greater than the average unit price for all products.
+--10. Write a query to retrieve the product name, aisle, and department name for all products with a unit price greater than the average unit price for all products.
 SELECT p.product_name, a.aisle, d.department, p.unit_price
 FROM products p
 JOIN aisles a ON p.aisle_id = a.aisle_id
@@ -153,39 +164,49 @@ JOIN department d ON p.department_id = d.department_id
 WHERE p.unit_price > (SELECT AVG(unit_price) FROM products);
 
 
---14. Write a query to retrieve the user IDs for all users who have placed at least one order with a product from aisle 1.
+--11. Write a query to retrieve the user IDs for all users who have placed at least one order with a product from aisle 1.
 SELECT DISTINCT o.user_id
 FROM orders o
 WHERE EXISTS (SELECT 1 FROM products p WHERE p.aisle_id = 1 AND o.product_id = p.product_id);
 
---15. Write a query to retrieve the order IDs and order dates for all orders with a total quantity greater than the average total quantity for all orders.
+--12. Write a query to retrieve the order IDs and order dates for all orders with a total quantity greater than the average total quantity for all orders.
 SELECT o.order_id, o.order_date
 FROM orders o
 WHERE (SELECT SUM(quantity) FROM orders WHERE order_id = o.order_id) > (SELECT AVG(sum_qty) FROM (SELECT order_id, SUM(quantity) as sum_qty FROM orders GROUP BY order_id) as sq);
 
+--OR 
 
---16. Write a query to retrieve the product name and unit price for all products that are sold in at least one order with a product from the same aisle and department.
-SELECT p.product_name, p.unit_price
-FROM products p
-WHERE EXISTS (
-  SELECT 1 
-  FROM orders o 
-  JOIN products p2 ON o.product_id = p2.product_id 
-  WHERE p2.aisle_id = p.aisle_id AND p2.department_id = p.department_id
-  AND o.order_status = 'Delivered');
+WITH avg_total_quantity AS (
+    SELECT AVG(quantity) AS avg_quantity
+    FROM orders
+)
+SELECT order_id, order_date
+FROM orders
+CROSS JOIN avg_total_quantity
+WHERE quantity > avg_total_quantity.avg_quantity;
 
---17. Find all products that belong to a department with at least one product that costs more than $50:
-SELECT *
+--13. Write a query to retrieve the product name and unit price for all products that are sold in at least one order with a product from the same aisle and department.
+SELECT DISTINCT p.product_name, p.unit_price
 FROM products p
+INNER JOIN orders o ON p.product_id = o.product_id
 WHERE EXISTS (
     SELECT 1
-    FROM products
-    WHERE department_id = p.department_id
-    AND unit_price = 45
+    FROM products p2
+    INNER JOIN orders o2 ON p2.product_id = o2.product_id
+    WHERE p2.aisle_id = p.aisle_id
+      AND p2.department_id = p.department_id
 );
 
+--14. Find all products that belong to a department with at least one product that costs more than $50:
+SELECT p.product_id, p.product_name, p.unit_price, p.department_id
+FROM products p
+WHERE p.department_id IN (
+    SELECT department_id
+    FROM products
+    WHERE unit_price > 50
+);
 
---18. Return a list of users who have made at least 5 orders, along with the total number of orders they've made and the average number of days between orders.
+--15. Return a list of users who have made at least 5 orders, along with the total number of orders they've made and the average number of days between orders.
 WITH user_order_counts AS (
   SELECT user_id, COUNT(DISTINCT order_id) AS num_orders
   FROM orders
@@ -202,7 +223,7 @@ SELECT uoc.user_id, uoc.num_orders, uad.avg_days_since_prior_order
 FROM user_order_counts uoc
 JOIN user_avg_days_since_prior_order uad ON uoc.user_id = uad.user_id;
 
---19. Create a CTE that shows the top 5 products by sales for the month of April 2023.
+--16. Shows the top 5 products by sales for the month of April 2023.
 WITH monthly_sales AS (
   SELECT p.product_name, SUM(p.unit_price * o.quantity) AS total_sales
   FROM products p
@@ -216,7 +237,7 @@ ORDER BY total_sales DESC
 LIMIT 5;
 
 
---20. What is the average number of days between orders for users who have made at least 10 orders?
+--17. What is the average number of days between orders for users who have made at least 10 orders?
 WITH user_avg_days_between_orders AS (
   SELECT user_id, AVG(days_since_prior_order) AS avg_days_between_orders
   FROM orders
@@ -226,7 +247,7 @@ WITH user_avg_days_between_orders AS (
 SELECT ROUND(AVG(avg_days_between_orders))::text || ' ' || 'days' AS overall_avg_days_between_orders
 FROM user_avg_days_between_orders;
 
---21. What are the top 5 best-selling products in each department for the last month?
+--18. What are the top 5 best-selling products in each department for the last month?
 WITH last_month_orders AS (
     SELECT *
     FROM orders
