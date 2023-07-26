@@ -1,4 +1,4 @@
-/* CREATE TABLES*/
+/*DATABASE*/
 
 CREATE TABLE Users
 (
@@ -665,42 +665,6 @@ GROUP BY u.name
 ORDER BY total_amount desc
 OFFSET 0 ROWS 
 FETCH FIRST 3 ROWS ONLY;
-
-
-
-
-
-
-
-
-
-
-
-
---join conditions
-SELECT u.name, a.userid, a.province, o.paymentstate, o.totalamount
-FROM address a
-JOIN deliver_to d ON a.addrid = d.addrid
-JOIN orders o ON d.ordernumber = o.ordernumber
-JOIN users u ON a.userid = u.userid
-
-
-SELECT * FROM orders;
-Insert into orders values (85528797, 'Paid', current_date -12, 305)
-
-
-SELECT * FROM deliver_to;
-Insert into deliver_to values (12, 85528797, current_date -2)
-
-
-ALTER TABLE product
-RENAME COLUMN amount TO quantity
-
-SELECT * FROM brand
-
-SELECT * FROM store
-
-SELECT * FROM product
 
 
 
