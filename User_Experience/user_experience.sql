@@ -67,8 +67,6 @@ VALUES
 (45, 'Pet Lovers Guide', '2023-11-24', 700, 'Pet Owners', 'Pet Care and Products'),
 (46, 'Kids Fun & Games', '2023-12-25', 600, 'Parents and Kids', 'Toys and Games');
   
-
--- Inserting 20 rows of user experience data
 INSERT INTO user_experience_data (catalog_id, page_id, clicks, time_spent, customer_feedback)
 VALUES
   (1, 1, 10, 120, 'Easy to navigate and visually appealing'),
@@ -92,7 +90,6 @@ VALUES
   (7, 1, 9, 100, 'Well-designed user interface');
 
   
-  -- Inserting 20 more rows of user experience data
 INSERT INTO user_experience_data (catalog_id, page_id, clicks, time_spent, customer_feedback)
 VALUES
   (8, 1, 12, 130, 'Nice design and easy to use'),
@@ -116,7 +113,6 @@ VALUES
   (14, 1, 10, 110, 'Nice design and easy to use');
 
 
--- Inserting 30 more rows of user experience data
 INSERT INTO user_experience_data (catalog_id, page_id, clicks, time_spent, customer_feedback)
 VALUES
   (15, 1, 11, 120, 'Good user experience'),
@@ -150,7 +146,6 @@ VALUES
   (24, 2, 12, 150, 'More product information needed'),
   (24, 3, 16, 210, 'Visually engaging and well-designed');
 
--- Inserting 30 more rows of user experience data
 INSERT INTO user_experience_data (catalog_id, page_id, clicks, time_spent, customer_feedback)
 VALUES
   (25, 1, 11, 120, 'Easy to use and navigate'),
@@ -184,7 +179,6 @@ VALUES
   (34, 2, 12, 150, 'More product descriptions would be helpful'),
   (34, 3, 16, 210, 'Visually engaging and well-designed');
 
--- Inserting 30 more rows of user experience data
 INSERT INTO user_experience_data (catalog_id, page_id, clicks, time_spent, customer_feedback)
 VALUES
   (35, 1, 11, 120, 'Easy to use and navigate'),
@@ -217,7 +211,7 @@ VALUES
   (44, 1, 8, 90, 'Easy navigation'),
   (44, 2, 12, 150, 'More product descriptions would be helpful'),
   (44, 3, 16, 210, 'Visually engaging and well-designed');
--- Inserting 50 more rows of user experience data
+
 INSERT INTO user_experience_data (catalog_id, page_id, clicks, time_spent, customer_feedback)
 VALUES
   (45, 1, 11, 120, 'Nice design and user-friendly'),
@@ -263,7 +257,8 @@ VALUES
 SELECT * FROM catalog_info c
 right JOIN user_experience u on c.catalog_id = c.catalog_id
  
-  
+  /*Business Questions*/
+
 -- 1. What is the average number of clicks per catalog?
 SELECT catalog_info.catalog_id, catalog_info.catalog_name, 
 FLOOR (AVG(user_experience.clicks)) avg_number_clicks
@@ -333,14 +328,11 @@ ORDER BY total_clicks DESC;
 select * from catalog_info
 
 --9. Consolidate catalog names based on target audience for better market segmentation analysis
-
 SELECT 
   target_audience, 
   string_agg(catalog_name, ', ') as catalogs
 FROM catalog_info
 GROUP BY target_audience;
-
---10. test 
   
   
 

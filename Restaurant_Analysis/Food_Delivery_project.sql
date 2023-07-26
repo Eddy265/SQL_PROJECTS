@@ -1,10 +1,4 @@
-/*This food delivery database project is a relational database management system designed to organize and manage data for customers, 
-restaurants, menu items, orders, and order items. This project aims to provide a comprehensive and efficient platform for managing all 
-aspects related to the ordering and delivery of food from restaurants, including customer details, restaurant location and contact details,
-menu item details, and order details. The database schema contains several well-structured tables with primary and foreign keys, making it 
-easy for developers to query the data and generate accurate reports as per business requirements.*/
-
---Database tables
+/* DATABASE*/
 
 CREATE TABLE customers (
   customer_id SERIAL PRIMARY KEY,

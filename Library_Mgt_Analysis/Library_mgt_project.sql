@@ -1,6 +1,4 @@
-/* Library Management System SQL project
-
-CREATE TABLES*/
+/* DATABASE MODEL*/
 
 CREATE TABLE tbl_publisher (
 		publisher_PublisherName VARCHAR(100) PRIMARY KEY NOT NULL,
