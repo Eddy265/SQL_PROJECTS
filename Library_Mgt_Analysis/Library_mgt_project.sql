@@ -372,4 +372,3 @@ JOIN tbl_book_copies ON tbl_book.book_BookID = tbl_book_copies.book_copies_Copie
 JOIN tbl_library_branch ON tbl_book_copies.book_copies_BranchID = tbl_library_branch.library_branch_BranchID
 
 
-SELECT * FROM tbl_library_branch
