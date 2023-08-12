@@ -23,7 +23,7 @@ The goal of this project is to clean and transform the raw dataset into a struct
 2. **Cleaning and Transformation**: Various cleaning and transformation tasks are performed using SQL scripts. Some key steps include:
     - Handling missing values by replacing them with appropriate values or NULL.
     - Converting data types to ensure consistency and accuracy.
-    - Cleaning and standardizing columns like `Date_joined`, `Valuation`, and `Total_Raised`.
+    - Cleaning and standardizing columns like `Date_joined`, `Valuation`, `Industry`, `Investors`, `founded_year`, `financial_stage`, `investors_count`, `dal_terms`, `portfolio_exits` and `Total_Raised`.
 
 3. **Normalization**: After data cleaning, the data is normalized by creating separate tables including `Company`, `Valuation`, `Investor`, and `Industry`and establishing primary and foreign key relationships to ensure data integrity and support meaningful queries. This step reduces redundancy and improves data integrity, leading to a structured relational database.
 
