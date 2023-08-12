@@ -4,7 +4,7 @@
 
 This project focuses on the data wrangling process for a dataset containing information about unicorn companies. Unicorn companies are privately held startups with a valuation of over $1 billion. The dataset includes various attributes such as company details, valuation, investors, and financial stages.
 
-The goal of this project is to clean and transform the raw dataset into a structured format suitable for analysis and reporting. The data wrangling process involves tasks like handling missing values, data type conversions, normalization, and creating relationships between tables.
+The goal of this project is to clean and transform the raw dataset into a structured format suitable for analysis and reporting. The data wrangling process involves several steps, including data cleaning, data type conversions, normalization, handling missing values, and the creation of a relational database to establish meaningful relationships between entities.
 
 ## Contents
 
@@ -25,9 +25,9 @@ The goal of this project is to clean and transform the raw dataset into a struct
     - Converting data types to ensure consistency and accuracy.
     - Cleaning and standardizing columns like `Date_joined`, `Valuation`, and `Total_Raised`.
 
-3. **Normalization**: After data cleaning, the data is normalized by creating separate tables for related information and establishing primary and foreign keys. This step reduces redundancy and improves data integrity, leading to a structured relational database.
+3. **Normalization**: After data cleaning, the data is normalized by creating separate tables including `Company`, `Valuation`, `Investor`, and `Industry`and establishing primary and foreign key relationships to ensure data integrity and support meaningful queries. This step reduces redundancy and improves data integrity, leading to a structured relational database.
 
-4. **Analysis and Reporting**: With the cleaned and structured data, you can perform various analyses and generate reports to gain insights into unicorn companies' characteristics, valuation trends, and investor relationships.
+4. **Analysis and Reporting**: With the cleaned and structured data, you can perform various analyses and generate reports to gain insights into unicorn companies' characteristics, valuation trends, investor relationships, and industry distributions.
 
 ## Acknowledgments
 
