@@ -1,0 +1,1182 @@
+industryid,industry,companyid
+1,Fintech,90
+2,E-commerce & direct-to-consumer,49
+3,Cybersecurity,50
+4,Kuang-Chi,184
+5,Health,207
+6,Fintech,51
+7,Fintech,52
+8,Other,391
+9,Fintech,53
+10,Artificial intelligence,55
+11,Travel,56
+12,Fintech,57
+13,Health,58
+14,Internet software & services,59
+15,Health,60
+16,Artificial intelligence,61
+17,Cybersecurity,62
+18,E-commerce & direct-to-consumer,63
+19,Fintech,64
+20,Fintech,65
+21,Internet software & services,66
+22,Artificial intelligence,67
+23,Internet software & services,68
+24,Fintech,69
+25,Health,70
+26,Other,71
+27,Internet software & services,72
+28,Hardware,73
+29,Consumer & retail,80
+30,E-commerce & direct-to-consumer,81
+31,Internet software & services,82
+32,Health,83
+33,Internet software & services,84
+34,E-commerce & direct-to-consumer,85
+35,Supply chain,86
+36,logistics,86
+38,Internet software & services,87
+39,Data management & analytics,88
+40,Artificial intelligence,89
+41,Supply chain,91
+42,logistics,91
+44,Data management & analytics,92
+45,Fintech,93
+46,Internet software & services,94
+47,E-commerce & direct-to-consumer,95
+48,Health,96
+49,Auto & transportation,97
+50,Fintech,98
+51,Fintech,99
+52,Fintech,100
+53,Artificial intelligence,101
+54,Auto & transportation,102
+55,Other,103
+56,Data management & analytics,104
+57,Fintech,105
+58,Fintech,106
+59,E-commerce & direct-to-consumer,108
+60,Data management & analytics,109
+61,Fintech,110
+62,Auto & transportation,111
+63,Artificial intelligence,112
+64,Travel,113
+65,Internet software & services,114
+66,Fintech,116
+67,Artificial intelligence,118
+68,Health,119
+69,Internet software & services,120
+70,Internet software & services,121
+71,Health,122
+72,Hardware,123
+73,E-commerce & direct-to-consumer,124
+74,Edtech,125
+75,Edtech,7
+76,E-commerce & direct-to-consumer,8
+77,Cybersecurity,126
+78,Hardware,128
+79,Internet software & services,129
+80,Auto & transportation,130
+81,Internet software & services,131
+82,Cybersecurity,133
+83,E-commerce & direct-to-consumer,134
+84,Other,135
+85,E-commerce & direct-to-consumer,136
+86,Fintech,137
+87,Internet software & services,138
+88,Internet software & services,139
+89,Artificial intelligence,141
+90,Fintech,142
+91,Supply chain,143
+92,logistics,143
+94,Fintech,132
+95,E-commerce & direct-to-consumer,144
+96,Mobile & telecommunications,145
+97,Artificial intelligence,146
+98,Fintech,147
+99,Hardware,29
+100,Data management & analytics,30
+101,Consumer & retail,148
+102,Health,149
+103,Fintech,150
+104,Internet software & services,151
+105,Internet software & services,152
+106,Internet software & services,153
+107,Internet software & services,154
+108,Data management & analytics,155
+109,Fintech,156
+110,E-commerce & direct-to-consumer,157
+111,Internet software & services,158
+112,Other,160
+113,Mobile & telecommunications,161
+114,Internet software & services,162
+115,Health,163
+116,Health,164
+117,E-commerce & direct-to-consumer,165
+118,Mobile & telecommunications,166
+119,Internet software & services,167
+120,Edtech,168
+121,Fintech,169
+122,E-commerce & direct-to-consumer,170
+123,Data management & analytics,171
+124,Data management & analytics,172
+125,E-commerce & direct-to-consumer,173
+126,Health,174
+127,Other,175
+128,Internet software & services,176
+129,Internet software & services,177
+130,Internet software & services,178
+131,E-commerce & direct-to-consumer,179
+132,Data management & analytics,180
+133,Edtech,181
+134,Health,182
+135,Artificial intelligence,183
+136,Internet software & services,185
+137,Fintech,186
+138,Internet software & services,187
+139,Cybersecurity,189
+140,Internet software & services,190
+141,Fintech,191
+142,Edtech,192
+143,Internet software & services,193
+144,Internet software & services,194
+145,Fintech,195
+146,Hardware,196
+147,Edtech,197
+148,Fintech,198
+149,Auto & transportation,200
+150,Data management & analytics,201
+151,Artificial intelligence,203
+152,Auto & transportation,204
+153,Other,205
+154,Mobile & telecommunications,206
+155,Supply chain,208
+156,logistics,208
+158,E-commerce & direct-to-consumer,209
+159,Fintech,210
+160,E-commerce & direct-to-consumer,211
+161,Fintech,212
+162,Edtech,213
+163,Fintech,214
+164,Fintech,215
+165,Health,216
+166,Internet software & services,217
+167,E-commerce & direct-to-consumer,218
+168,Fintech,220
+169,Supply chain,221
+170,logistics,221
+172,Fintech,222
+173,E-commerce & direct-to-consumer,223
+174,Internet software & services,224
+175,Mobile & telecommunications,225
+176,Travel,226
+177,E-commerce & direct-to-consumer,227
+178,Fintech,228
+179,Fintech,229
+180,Edtech,230
+181,Supply chain,231
+182,logistics,231
+184,Auto & transportation,232
+185,Other,233
+186,Edtech,234
+187,Cybersecurity,235
+188,Internet software & services,236
+189,Fintech,237
+190,Internet software & services,238
+191,Health,239
+192,Internet software & services,240
+193,Edtech,241
+194,Health,242
+195,Internet software & services,243
+196,Internet software & services,244
+197,Internet software & services,245
+198,Internet software & services,246
+199,E-commerce & direct-to-consumer,247
+200,Internet software & services,248
+201,Edtech,249
+202,Fintech,250
+203,Fintech,251
+204,Internet software & services,252
+205,Auto & transportation,253
+206,Fintech,254
+207,Fintech,255
+208,Internet software & services,256
+209,Fintech,257
+210,Tiger Global Management,258
+211,Tiger Brokers,258
+212,DCM Ventures,258
+213,Fintech,259
+214,Fintech,261
+215,Internet software & services,262
+216,E-commerce & direct-to-consumer,263
+217,Fintech,264
+218,Fintech,265
+219,Fintech,38
+220,E-commerce & direct-to-consumer,266
+221,Mobile & telecommunications,267
+222,Internet software & services,268
+223,Supply chain,269
+224,logistics,269
+226,Artificial intelligence,270
+227,Cybersecurity,271
+228,Supply chain,272
+229,logistics,272
+231,Cybersecurity,304
+232,Edtech,273
+233,Mobile & telecommunications,274
+234,Cybersecurity,275
+235,Auto & transportation,276
+236,Fintech,277
+237,Internet software & services,278
+238,Artificial intelligence,279
+239,Other,280
+240,E-commerce & direct-to-consumer,281
+241,Internet software & services,282
+242,Internet software & services,283
+243,Internet software & services,284
+244,Jungle Ventures,285
+245,Accel,285
+246,Venture Highway,285
+247,Internet software & services,286
+248,Fintech,287
+249,Data management & analytics,288
+250,Other,289
+251,Auto & transportation,290
+252,Cybersecurity,291
+253,Internet software & services,292
+254,E-commerce & direct-to-consumer,293
+255,E-commerce & direct-to-consumer,294
+256,Fintech,295
+257,Cybersecurity,296
+258,Internet software & services,297
+259,Cybersecurity,298
+260,Internet software & services,299
+261,Artificial Intelligence,300
+262,Health,301
+263,Fintech,302
+264,Internet software & services,303
+265,Fintech,305
+266,Auto & transportation,306
+267,Hardware,307
+268,Cybersecurity,309
+269,Cybersecurity,310
+270,Fintech,311
+271,Supply chain,312
+272,logistics,312
+274,Fintech,313
+275,Internet software & services,314
+276,Cybersecurity,315
+277,E-commerce & direct-to-consumer,316
+278,Hardware,317
+279,Other,318
+280,Artificial intelligence,319
+281,Supply chain,320
+282,logistics,320
+284,Other,321
+285,Fintech,322
+286,Internet software & services,324
+287,Fintech,325
+288,E-commerce & direct-to-consumer,326
+289,Consumer & retail,327
+290,Internet software & services,328
+291,Internet software & services,329
+292,E-commerce & direct-to-consumer,330
+293,Fintech,331
+294,Fintech,332
+295,Health,1028
+296,Internet software & services,333
+297,Health,334
+298,Internet software & services,335
+299,Supply chain,336
+300,logistics,336
+302,Artificial intelligence,337
+303,Mobile & telecommunications,338
+304,Other,339
+305,Artificial intelligence,340
+306,Artificial intelligence,341
+307,Fintech,342
+308,Data management & analytics,344
+309,Fintech,345
+310,E-commerce & direct-to-consumer,347
+311,Internet software & services,348
+312,Internet software & services,349
+313,E-commerce & direct-to-consumer,350
+314,Artificial intelligence,352
+315,Internet software & services,353
+316,Fintech,308
+317,Fintech,355
+318,Consumer & retail,356
+319,Artificial intelligence,357
+320,Auto & transportation,358
+321,Artificial intelligence,343
+322,E-commerce & direct-to-consumer,359
+323,Internet software & services,360
+324,Other,361
+325,Artificial intelligence,362
+326,Hardware,363
+327,Artificial intelligence,364
+328,Consumer & retail,365
+329,Cybersecurity,366
+330,Travel,367
+331,Data management & analytics,368
+332,Internet software & services,369
+333,Mobile & telecommunications,371
+334,Data management & analytics,372
+335,E-commerce & direct-to-consumer,373
+336,Fintech,374
+337,Health,375
+338,Fintech,377
+339,Consumer & retail,378
+340,Health,379
+341,Fintech,380
+342,Artificial intelligence,381
+343,Health,382
+344,Internet software & services,384
+345,Fintech,385
+346,Internet software & services,386
+347,Fintech,387
+348,Supply chain,388
+349,logistics,388
+351,Internet software & services,389
+352,Fintech,390
+353,Artificial intelligence,392
+354,Fintech,393
+355,Other,394
+356,Fintech,395
+357,Internet software & services,396
+358,Mobile & telecommunications,397
+359,E-commerce & direct-to-consumer,398
+360,Health,399
+361,Vision Plus Capital,401
+362,GSR Ventures,401
+363,ZhenFund,401
+364,Internet software & services,409
+365,Fintech,402
+366,Hardware,403
+367,Travel,404
+368,Internet software & services,405
+369,Data management & analytics,406
+370,Fintech,407
+371,Fintech,408
+372,Fintech,410
+373,Artificial intelligence,411
+374,Cybersecurity,412
+375,Health,414
+376,Internet software & services,415
+377,Hardware,416
+378,Data management & analytics,417
+379,E-commerce & direct-to-consumer,418
+380,Edtech,420
+381,Fintech,421
+382,Internet software & services,422
+383,Internet software & services,423
+384,Fintech,424
+385,Health,425
+386,Fintech,426
+387,Auto & transportation,427
+388,Internet software & services,428
+389,Internet software & services,429
+390,Health,430
+391,Internet software & services,432
+392,Artificial intelligence,433
+393,Auto & transportation,435
+394,Cybersecurity,436
+395,E-commerce & direct-to-consumer,437
+396,Supply chain,9
+397,logistics,9
+399,Internet software & services,10
+400,Edtech,11
+401,Cybersecurity,438
+402,Fintech,439
+403,Mobile & telecommunications,440
+404,Consumer & retail,441
+405,Consumer & retail,442
+406,Health,443
+407,Health,444
+408,Internet software & services,445
+409,E-commerce & direct-to-consumer,446
+410,Cybersecurity,447
+411,Data management & analytics,448
+412,Artificial intelligence,449
+413,Fintech,450
+414,E-commerce & direct-to-consumer,451
+415,Fintech,32
+416,Mobile & telecommunications,33
+417,Travel,34
+418,Internet software & services,452
+419,Fintech,453
+420,Fintech,454
+421,Fintech,455
+422,Other,457
+423,Data management & analytics,458
+424,Health,459
+425,E-commerce & direct-to-consumer,460
+426,Fintech,461
+427,Hardware,462
+428,Auto & transportation,463
+429,Cybersecurity,464
+430,Internet software & services,465
+431,E-commerce & direct-to-consumer,466
+432,Internet software & services,467
+433,Internet software & services,468
+434,Fintech,469
+435,Data management & analytics,470
+436,Artificial intelligence,471
+437,Fintech,472
+438,Fintech,473
+439,Fintech,474
+440,Health,475
+441,Supply chain,476
+442,logistics,476
+444,Consumer & retail,478
+445,Fintech,479
+446,Fintech,480
+447,Hardware,481
+448,Other,482
+449,Internet software & services,483
+450,Mobile & telecommunications,484
+451,Data management & analytics,485
+452,Travel,486
+453,E-commerce & direct-to-consumer,487
+454,Auto & transportation,488
+455,Data management & analytics,489
+456,Hardware,502
+457,Travel,490
+458,E-commerce & direct-to-consumer,491
+459,Consumer & retail,492
+460,Fintech,494
+461,Internet software & services,495
+462,Internet software & services,496
+463,Health,497
+464,Cybersecurity,498
+465,Fintech,499
+466,Fintech,500
+467,Hardware,501
+468,Supply chain,503
+469,logistics,503
+471,Internet software & services,504
+472,Internet software & services,505
+473,Artificial Intelligence,506
+474,Internet software & services,507
+475,Fintech,508
+476,Fintech,509
+477,Internet software & services,510
+478,Data management & analytics,511
+479,Cybersecurity,512
+480,E-commerce & direct-to-consumer,513
+481,Fintech,514
+482,Internet software & services,516
+483,Fintech,517
+484,Data management & analytics,518
+485,Fintech,519
+486,Internet software & services,520
+487,Health,521
+488,Other,522
+489,Fintech,523
+490,E-commerce & direct-to-consumer,524
+491,Hardware,12
+492,E-commerce & direct-to-consumer,13
+493,E-commerce & direct-to-consumer,14
+494,Internet software & services,525
+495,Internet software & services,526
+496,Other,527
+497,E-commerce & direct-to-consumer,528
+498,Fintech,529
+499,Artificial intelligence,530
+500,Health,531
+501,Supply chain,532
+502,logistics,532
+504,Supply chain,533
+505,logistics,533
+507,Internet software & services,534
+508,Fintech,35
+509,E-commerce & direct-to-consumer,36
+510,Auto & transportation,37
+511,Hardware,538
+512,E-commerce & direct-to-consumer,541
+513,Fintech,542
+514,Fintech,543
+515,Cybersecurity,544
+516,Auto & transportation,545
+517,Internet software & services,546
+518,Health,548
+519,Internet software & services,549
+520,Internet software & services,550
+521,Fintech,551
+522,Artificial intelligence,552
+523,Data management & analytics,553
+524,E-commerce & direct-to-consumer,554
+525,Auto & transportation,556
+526,Supply chain,557
+527,logistics,557
+529,Internet software & services,558
+530,E-commerce & direct-to-consumer,559
+531,Internet software & services,560
+532,Internet software & services,561
+533,Internet software & services,562
+534,E-commerce & direct-to-consumer,563
+535,Other,564
+536,Fintech,565
+537,Internet software & services,566
+538,Internet software & services,567
+539,Mobile & telecommunications,569
+540,Fintech,570
+541,Internet software & services,571
+542,Cybersecurity,572
+543,Cybersecurity,573
+544,Mobile & telecommunications,574
+545,Travel,576
+546,Health,577
+547,Fintech,578
+548,Fintech,579
+549,Other,580
+550,Fintech,581
+551,E-commerce & direct-to-consumer,582
+552,E-commerce & direct-to-consumer,583
+553,Internet software & services,584
+554,E-commerce & direct-to-consumer,585
+555,Cybersecurity,586
+556,Health,587
+557,Artificial intelligence,588
+558,Health,589
+559,Health,590
+560,Hopu Investment Management,591
+561,Boyu Capital,591
+562,DC Thomson Ventures,591
+563,Health,592
+564,E-commerce & direct-to-consumer,594
+565,Other,595
+566,Mobile & telecommunications,596
+567,Fintech,598
+568,Supply chain,600
+569,logistics,600
+571,Data management & analytics,601
+572,Fintech,602
+573,Fintech,604
+574,Internet software & services,605
+575,Fintech,606
+576,Supply chain,607
+577,logistics,607
+579,Artificial Intelligence,608
+580,Mobile & telecommunications,609
+581,Internet software & services,610
+582,Other,611
+583,Fintech,612
+584,Cybersecurity,613
+585,Internet software & services,614
+586,Other,593
+587,Fintech,615
+588,Internet software & services,616
+589,Internet software & services,617
+590,Cybersecurity,618
+591,Internet software & services,619
+592,Internet software & services,620
+593,Supply chain,621
+594,logistics,621
+596,Fintech,622
+597,Auto & transportation,38
+598,Consumer & retail,623
+599,Hardware,624
+600,Health,625
+601,Other,626
+602,Other,628
+603,Internet software & services,629
+604,Consumer & retail,631
+605,Internet software & services,632
+606,Edtech,568
+607,Internet software & services,634
+608,Fintech,635
+609,Cybersecurity,636
+610,E-commerce & direct-to-consumer,637
+611,Edtech,638
+612,Artificial intelligence,639
+613,Other,640
+614,Artificial intelligence,641
+615,Artificial intelligence,642
+616,Other,643
+617,Internet software & services,644
+618,Supply chain,645
+619,logistics,645
+621,Artificial Intelligence,646
+622,Supply chain,647
+623,logistics,647
+625,Health,648
+626,Fintech,649
+627,Internet software & services,650
+628,Edtech,651
+629,Fintech,652
+630,E-commerce & direct-to-consumer,653
+631,Internet software & services,654
+632,Data management & analytics,655
+633,Internet software & services,656
+634,E-commerce & direct-to-consumer,657
+635,E-commerce & direct-to-consumer,658
+636,Fintech,659
+637,Health,660
+638,E-commerce & direct-to-consumer,662
+639,Internet software & services,663
+640,Artificial intelligence,664
+641,Fintech,665
+642,E-commerce & direct-to-consumer,666
+643,Supply chain,667
+644,logistics,667
+646,Internet software & services,668
+647,Fintech,669
+648,Data management & analytics,670
+649,Consumer & retail,671
+650,Edtech,673
+651,Supply chain,674
+652,logistics,674
+654,Health,675
+655,Internet software & services,676
+656,Auto & transportation,677
+657,Auto & transportation,678
+658,Cybersecurity,680
+659,Fintech,681
+660,Artificial intelligence,682
+661,Fintech,683
+662,Health,684
+663,Supply chain,685
+664,logistics,685
+666,Fintech,686
+667,Mobile & telecommunications,687
+668,E-commerce & direct-to-consumer,688
+669,Consumer & retail,691
+670,Travel,692
+671,Fintech,693
+672,Data management & analytics,694
+673,E-commerce & direct-to-consumer,695
+674,Supply chain,696
+675,logistics,696
+677,Data management & analytics,697
+678,Fintech,698
+679,Health,699
+680,Fintech,700
+681,Internet software & services,701
+682,Artificial intelligence,702
+683,Internet software & services,703
+684,Fintech,704
+685,500 Global,705
+686,Rakuten Ventures,705
+687,Golden Gate Ventures,705
+688,Internet software & services,706
+689,Internet software & services,707
+690,Internet software & services,708
+691,Fintech,709
+692,E-commerce & direct-to-consumer,710
+693,Fintech,711
+694,Fintech,712
+695,Internet software & services,713
+696,E-commerce & direct-to-consumer,714
+697,Edtech,715
+698,Cybersecurity,716
+699,Cybersecurity,717
+700,Internet software & services,718
+701,Supply chain,719
+702,logistics,719
+704,Other,720
+705,Supply chain,722
+706,logistics,722
+708,E-commerce & direct-to-consumer,723
+709,E-commerce & direct-to-consumer,724
+710,Data management & analytics,725
+711,Mobile & telecommunications,726
+712,Hardware,727
+713,Fintech,773
+714,Internet software & services,728
+715,Health,729
+716,Artificial intelligence,730
+717,Auto & transportation,731
+718,Cybersecurity,732
+719,E-commerce & direct-to-consumer,733
+720,E-commerce & direct-to-consumer,734
+721,Mobile & telecommunications,735
+722,Other,736
+723,E-commerce & direct-to-consumer,737
+724,E-commerce & direct-to-consumer,738
+725,Artificial intelligence,739
+726,Fintech,1029
+727,Mobile & telecommunications,740
+728,Internet software & services,741
+595,delivery,621
+729,E-commerce & direct-to-consumer,742
+730,Internet software & services,743
+731,E-commerce & direct-to-consumer,744
+732,Edtech,745
+733,Edtech,746
+734,Health,747
+735,Artificial intelligence,748
+736,Internet software & services,749
+737,E-commerce & direct-to-consumer,752
+738,Health,753
+739,E-commerce & direct-to-consumer,754
+740,E-commerce & direct-to-consumer,755
+741,Mobile & telecommunications,756
+742,Supply chain,757
+743,logistics,757
+745,Sequoia Capital China,759
+746,ING,759
+747,Alibaba Entrepreneurs Fund,759
+748,Mobile & telecommunications,760
+749,Health,761
+750,Hardware,762
+751,Mobile & telecommunications,763
+752,Edtech,764
+753,Hardware,765
+754,Health,766
+755,Internet software & services,767
+756,Consumer & retail,769
+757,Mobile & telecommunications,770
+758,Consumer & retail,15
+759,Fintech,16
+760,Supply chain,771
+761,logistics,771
+763,Auto & transportation,772
+764,Artificial intelligence,774
+765,E-commerce & direct-to-consumer,775
+766,Cybersecurity,39
+767,Fintech,40
+768,Travel,776
+769,Hardware,777
+770,Hardware,778
+771,Hardware,780
+772,Other,783
+773,Artificial intelligence,784
+774,Fintech,785
+775,Internet software & services,787
+776,Edtech,789
+777,Travel,790
+778,Artificial intelligence,791
+779,Fintech,792
+780,Fintech,793
+781,Fintech,794
+782,Fintech,795
+783,E-commerce & direct-to-consumer,796
+784,Health,797
+785,E-commerce & direct-to-consumer,798
+786,Other,799
+787,Edtech,800
+788,Health,801
+789,E-commerce & direct-to-consumer,802
+790,Mobile & telecommunications,803
+791,E-commerce & direct-to-consumer,804
+792,Other,805
+793,Supply chain,806
+794,logistics,806
+796,Other,807
+797,Fintech,808
+798,Data management & analytics,809
+799,Internet software & services,810
+800,Fintech,812
+801,Internet software & services,813
+802,Internet software & services,814
+803,Supply chain,815
+804,logistics,815
+806,Other,816
+807,Hardware,817
+808,Artificial intelligence,818
+809,Other,819
+810,Fintech,820
+811,Supply chain,821
+812,logistics,821
+814,Internet software & services,822
+815,Cybersecurity,823
+816,Sequoia Capital China,824
+817,Shunwei Capital Partners,824
+818,Qualgro,824
+819,Health,825
+820,Fintech,826
+821,Artificial intelligence,827
+822,Edtech,828
+823,Supply chain,779
+824,logistics,779
+826,Internet software & services,829
+827,E-commerce & direct-to-consumer,830
+828,E-commerce & direct-to-consumer,831
+829,Fintech,832
+830,Artificial intelligence,833
+831,Health,834
+832,Fintech,835
+833,Artificial intelligence,836
+834,Artificial intelligence,837
+835,Internet software & services,838
+836,Internet software & services,839
+837,Other,840
+838,Internet software & services,841
+839,Cybersecurity,1024
+840,Artificial intelligence,843
+841,Consumer & retail,844
+842,Fintech,845
+843,Data management & analytics,846
+844,Fintech,847
+845,Supply chain,849
+846,logistics,849
+848,Health,850
+849,Health,851
+850,Hardware,852
+851,SingTel Innov8,853
+852,Alpha JWC Ventures,853
+853,Golden Gate Ventures,853
+854,Artificial intelligence,854
+855,Supply chain,855
+856,logistics,855
+858,Cybersecurity,856
+859,Edtech,857
+860,Internet software & services,858
+861,Fintech,859
+862,Internet software & services,860
+863,Internet software & services,861
+864,Supply chain,862
+865,logistics,862
+867,Supply chain,863
+868,logistics,863
+870,Fintech,17
+871,Supply chain,864
+872,logistics,864
+874,Mundi Ventures,865
+875,Doqling Capital Partners,865
+876,Activant Capital,865
+877,Fintech,866
+878,Fintech,867
+879,Health,41
+880,Fintech,869
+881,Internet software & services,872
+882,Vertex Ventures SE Asia,875
+883,Global Founders Capital,875
+884,Visa Ventures,875
+885,Artificial intelligence,876
+886,Fintech,877
+887,Artificial intelligence,878
+888,Fintech,879
+889,Artificial intelligence,880
+890,E-commerce & direct-to-consumer,881
+891,Health,882
+892,Fintech,883
+893,Artificial intelligence,884
+894,Hardware,885
+895,Andreessen Horowitz,886
+896,DST Global,886
+897,IDG Capital,886
+898,E-commerce & direct-to-consumer,887
+899,Hardware,888
+900,E-commerce & direct-to-consumer,889
+901,Fintech,890
+902,Internet software & services,892
+903,Supply chain,893
+904,logistics,893
+906,Consumer & retail,894
+907,B Capital Group,895
+908,Monk's Hill Ventures,895
+909,Dynamic Parcel Distribution,895
+910,Edtech,896
+911,Health,897
+912,Fintech,898
+913,E-commerce & direct-to-consumer,899
+914,Internet software & services,902
+915,Fintech,904
+916,Fintech,905
+917,Health,906
+918,Supply chain,907
+919,logistics,907
+921,Artificial intelligence,909
+922,Internet software & services,910
+923,Internet software & services,911
+924,Fintech,966
+925,Internet software & services,912
+926,Consumer & retail,913
+927,Internet software & services,914
+928,Cybersecurity,915
+929,Fintech,916
+930,Hardware,917
+931,Other,918
+932,E-commerce & direct-to-consumer,919
+933,Internet software & services,920
+934,Artificial Intelligence,921
+935,Cybersecurity,922
+936,Internet software & services,923
+937,Fintech,925
+938,Internet software & services,926
+939,Internet software & services,927
+940,Artificial Intelligence,928
+941,Cybersecurity,930
+942,E-commerce & direct-to-consumer,931
+943,Fintech,933
+944,E-commerce & direct-to-consumer,934
+945,Cybersecurity,937
+946,Consumer & retail,938
+947,Cybersecurity,939
+948,Travel,940
+949,Artificial Intelligence,941
+950,Consumer & retail,942
+951,Other,943
+952,Temasek,944
+953,Guggenheim Investments,944
+954,Qatar Investment Authority,944
+955,Data management & analytics,945
+956,Supply chain,946
+957,logistics,946
+959,Fintech,947
+960,Artificial intelligence,948
+961,Cybersecurity,949
+962,Internet software & services,950
+963,Data management & analytics,951
+964,Internet software & services,952
+965,Fintech,953
+966,Artificial intelligence,954
+967,Data management & analytics,955
+968,Supply chain,956
+969,logistics,956
+971,Fintech,957
+972,Internet software & services,958
+973,Cybersecurity,959
+974,Internet software & services,960
+975,Fintech,903
+976,Fintech,924
+977,E-commerce & direct-to-consumer,18
+978,Internet software & services,19
+979,Consumer & retail,967
+980,Internet software & services,968
+981,Artificial intelligence,969
+982,Other,970
+983,E-commerce & direct-to-consumer,42
+984,Internet software & services,965
+985,Fintech,1004
+986,Fintech,972
+987,Other,973
+988,Internet software & services,974
+989,Fintech,975
+990,Cybersecurity,976
+991,Artificial intelligence,977
+992,Hardware,979
+993,E-commerce & direct-to-consumer,980
+994,Fintech,981
+995,Internet software & services,982
+996,Mobile & telecommunications,983
+997,E-commerce & direct-to-consumer,985
+998,Internet software & services,986
+999,E-commerce & direct-to-consumer,987
+1000,Internet software & services,990
+1001,E-commerce & direct-to-consumer,991
+1002,Edtech,992
+1003,Supply chain,1000
+1004,logistics,1000
+1006,Fintech,1001
+1007,Supply chain,1
+1008,logistics,1
+1010,Data management & analytics,2
+1011,Fintech,3
+1012,Sequoia Capital,4
+1013,Thoma Bravo,4
+1014,Softbank,4
+1015,E-commerce & direct-to-consumer,5
+1016,Internet software & services,43
+1017,Fintech,989
+1018,Fintech,44
+1019,Fintech,6
+1020,Other,679
+1021,Other,848
+1022,Fintech,1005
+1023,Dragonfly Captial,1006
+1024,Qiming Venture Partners,1006
+1025,DST Global,1006
+1026,Fintech,1012
+1027,Internet software & services,1013
+1028,Health,20
+1029,Artificial intelligence,21
+1030,Fintech,22
+1031,Consumer & retail,23
+1032,Hardware,24
+1033,Health,25
+1034,Internet software & services,26
+1035,Internet software & services,27
+1036,Auto & transportation,28
+1037,Fintech,48
+1038,Mobile & telecommunications,107
+1039,Data management & analytics,140
+1040,Fintech,199
+1041,Other,323
+1042,Artificial intelligence,354
+1043,Internet software & services,383
+1044,Supply chain,413
+1045,logistics,413
+1047,Fintech,477
+1048,Fintech,599
+1049,Fintech,45
+1050,Supply chain,46
+1051,logistics,46
+1053,Health,47
+1054,Cybersecurity,75
+1055,Fintech,76
+1056,Fintech,77
+1057,Artificial intelligence,78
+1058,Mobile & telecommunications,79
+1059,Fintech,117
+1060,Hardware,159
+1061,E-commerce & direct-to-consumer,188
+1062,Hardware,219
+1063,Mobile & telecommunications,370
+1064,Other,346
+1065,Artificial intelligence,400
+1066,Other,431
+1067,Hardware,434
+1068,Internet software & services,456
+1069,Internet software & services,515
+1070,E-commerce & direct-to-consumer,908
+1071,Travel,603
+1072,Data management & analytics,633
+1073,Cybersecurity,1010
+1074,E-commerce & direct-to-consumer,661
+1075,Fintech,721
+1076,Other,758
+1077,Consumer & retail,750
+1078,E-commerce & direct-to-consumer,811
+1079,Artificial intelligence,868
+1080,Fintech,900
+1081,Data management & analytics,901
+1082,Other,932
+1083,Internet software & services,961
+1084,Fintech,962
+1085,Supply chain,993
+1086,logistics,993
+1088,Supply chain,998
+1089,logistics,998
+1091,Supply chain,376
+1092,logistics,376
+1094,Internet software & services,419
+1095,Internet software & services,597
+1096,Mobile & telecommunications,627
+1097,Mobile & telecommunications,786
+1098,Other,788
+1099,Fintech,871
+1100,Mobile & telecommunications,1008
+1101,Internet software & services,1011
+1102,Supply chain,630
+1103,logistics,630
+1105,Other,690
+1106,Consumer & retail,751
+1107,Supply chain,781
+1108,logistics,781
+1110,Artificial intelligence,782
+1111,Artificial intelligence,842
+1112,Fintech,873
+1113,Supply chain,874
+1114,logistics,874
+1116,Internet software & services,891
+1117,Supply chain,908
+1118,logistics,908
+1120,Data management & analytics,929
+1121,Internet software & services,935
+1122,Health,936
+1123,Health,963
+1124,Cybersecurity,964
+1125,Fintech,971
+1126,Supply chain,994
+1127,logistics,994
+1129,Internet software & services,995
+1130,Internet software & services,996
+1131,Auto & transportation,1002
+1132,Fintech,1003
+1133,Internet software & services,1014
+1134,Other,1020
+1135,Internet software & services,1015
+1136,Fintech,1007
+1137,Other,1016
+1138,Finttech,1017
+1139,Internet software & services,1018
+1140,Internet software & services,1019
+1141,Fintech,1021
+1142,Internet software & services,1022
+1143,Other,1023
+1144,E-commerce & direct-to-consumer,1025
+1145,Other,1026
+1146,Mobile & telecommunications,1027
+1147,Other,1030
+1148,Internet software & services,1031
+1149,E-commerce & direct-to-consumer,1032
+1150,Other,1033
+1151,Internet software & services,1034
+1152,Auto & transportation,1035
+1153,Artificial intelligence,260
+1154,Mobile & telecommunications,493
+1155,E-commerce & direct-to-consumer,536
+1156,Auto & transportation,537
+1157,Supply chain,539
+1158,logistics,539
+1160,Internet software & services,540
+1161,Health,547
+1162,Mobile & telecommunications,555
+1163,Artificial intelligence,575
+1164,Artificial intelligence,672
+1165,E-commerce & direct-to-consumer,689
+1166,Mobile & telecommunications,768
+1167,Internet software & services,870
+1168,Fintech,74
+1169,Fintech,999
+1170,Artificial intelligence,54
+1171,Health,115
+1172,Fintech,127
+1173,Data management & analytics,202
+1174,Fintech,351
+1175,Auto & transportation,978
+1176,Health,997
+1177,Fintech,984
+1178,Artificial intelligence,988
+1179,Fintech,1009
+1180,Fintech,1036
+1181,Health,1037
+37,delivery,86
+43,delivery,91
+93,delivery,143
+157,delivery,208
+171,delivery,221
+183,delivery,231
+225,delivery,269
+230,delivery,272
+273,delivery,312
+283,delivery,320
+301,delivery,336
+350,delivery,388
+398,delivery,9
+443,delivery,476
+470,delivery,503
+503,delivery,532
+506,delivery,533
+528,delivery,557
+570,delivery,600
+578,delivery,607
+620,delivery,645
+624,delivery,647
+645,delivery,667
+653,delivery,674
+665,delivery,685
+676,delivery,696
+703,delivery,719
+707,delivery,722
+744,delivery,757
+762,delivery,771
+795,delivery,806
+805,delivery,815
+813,delivery,821
+825,delivery,779
+847,delivery,849
+857,delivery,855
+866,delivery,862
+869,delivery,863
+873,delivery,864
+905,delivery,893
+920,delivery,907
+958,delivery,946
+970,delivery,956
+1005,delivery,1000
+1009,delivery,1
+1046,delivery,413
+1052,delivery,46
+1087,delivery,993
+1090,delivery,998
+1093,delivery,376
+1104,delivery,630
+1109,delivery,781
+1115,delivery,874
+1119,delivery,908
+1128,delivery,994
+1159,delivery,539

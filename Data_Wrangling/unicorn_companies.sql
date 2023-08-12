@@ -10,14 +10,15 @@ CREATE TABLE clean_unicorn (Company varchar (100),
 							  Financial_Stage VARCHAR (20),
 							  Investors_Count VARCHAR (20),
 							  Deal_Terms VARCHAR (20),
-							  Portfolio_Exits varchar (50))
+							  Portfolio_Exits varchar (50)
+						   );
 
-COPY clean_unicorn FROM 'C:/Users/euzoe/OneDrive/Desktop/DATA_ANALYSIS/BOOTCAMP/NISIG/Unicorn_Companies.csv' WITH (FORMAT CSV, HEADER true)
+COPY clean_unicorn FROM 'C:/Users/euzoe/OneDrive/Desktop/DATA_ANALYSIS/MY_PROJECTS/SQL/SQL_PROJECTS/Data_Wrangling/Raw_Data/Unicorn_Companies.csv' WITH (FORMAT CSV, HEADER true)
 
 
 SELECT * FROM clean_unicorn_temp
 
---clean founded_year
+--Clean founded_year column
 -- Step 1: Replace "none" values with NULL
 UPDATE clean_unicorn
 SET founded_year = 0
@@ -28,31 +29,28 @@ ALTER TABLE clean_unicorn
 ALTER COLUMN founded_year TYPE int USING (NULLIF(founded_year, '')::int);
 
 
---clean valuation
+--clean valuation column
 UPDATE clean_unicorn
 SET Valuation = REPLACE(Valuation, '$', '')
 WHERE Valuation LIKE '%$%';
-
 --change data type
 ALTER TABLE clean_unicorn
 ALTER COLUMN Valuation_$B TYPE float USING (NULLIF(Valuation_$B, '')::float);
 
---Clean date joined
+--Clean date joined column
 UPDATE clean_unicorn
 SET Date_joined = TO_CHAR(TO_DATE(Date_joined, 'MM/DD/YYYY'), 'YYYY-MM-DD');
 -- Step 2: Alter the data type of the Date_joined column to DATE
 ALTER TABLE clean_unicorn
 ALTER COLUMN Date_joined TYPE date USING (NULLIF(Date_joined, '')::date);
 
---CLEAN total_raised
+--CLEAN total_raised column
 -- FIRST add another column
 ALTER TABLE clean_unicorn ADD Cleaned_Total_Raised DECIMAL(18, 2);
-
 -- SECOND remove $ symbol
 UPDATE clean_unicorn
 SET Total_Raised = REPLACE(Total_Raised, '$', '')
 WHERE Total_Raised LIKE '%$%';
-
 --THIRD convert to million and billion
 UPDATE clean_unicorn
 SET Cleaned_Total_Raised =
@@ -61,7 +59,6 @@ SET Cleaned_Total_Raised =
         WHEN Total_Raised LIKE '%B' THEN CAST(REPLACE(Total_Raised, 'B', '') AS DECIMAL) * 1000000000
         WHEN Total_Raised LIKE '%M' THEN CAST(REPLACE(Total_Raised, 'M', '') AS DECIMAL) * 1000000
 		END;
-		
 --FOURTH drop column total_raised and change the column name 'Cleaned_Total_Raised' back to total_raised
 ALTER TABLE clean_unicorn drop column Total_Raised;
 ALTER TABLE clean_unicorn rename column Cleaned_Total_Raised TO Total_Raised;
@@ -111,7 +108,6 @@ WHERE investors_count = 'None'
 --second, change the data type
 ALTER TABLE clean_unicorn
 ALTER COLUMN investors_count TYPE int USING (NULLIF(investors_count, '')::int);
-
 --Now update the InvestorsCount table in the Investors table from the clean_unicorn table
 UPDATE company AS c
 SET InvestorsCount = cu.Investors_count
@@ -170,7 +166,7 @@ JOIN clean_unicorn cu ON c.Company = cu.Company;
 
 --Add the column total_raised to the valuation table
 ALTER TABLE valuation ADD Total_Raised DECIMAL(18, 2);
-
+--Now update the valuation table from the clean_unicorn table
 UPDATE valuation AS c
 SET Total_Raised = cu.Total_Raised
 FROM clean_unicorn AS cu
