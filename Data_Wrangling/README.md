@@ -12,7 +12,7 @@ The goal of this project is to clean and transform the raw dataset into a struct
 
 - `SQL_Script`: This directory includes SQL scripts used for data cleaning, transformation, normalization, and creating primary and foreign keys.
 
-- `Processed_data`: The cleaned and transformed data files are saved in this directory.
+- `Processed_Data`: The cleaned and transformed data files are saved in this directory.
 
 - `README.md`: The project documentation you're currently reading.
 
