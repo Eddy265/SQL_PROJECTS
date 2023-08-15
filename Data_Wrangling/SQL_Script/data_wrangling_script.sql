@@ -1,5 +1,5 @@
 CREATE TABLE clean_unicorn (Company varchar (100),
-							  Valuation VARCHAR (20),
+							  Valuation_B$ VARCHAR (20),
 							  Date_joined VARCHAR (20),
 							  Country char (50),
 							  City char (50),
@@ -16,27 +16,34 @@ CREATE TABLE clean_unicorn (Company varchar (100),
 COPY clean_unicorn FROM 'C:/Users/euzoe/OneDrive/Desktop/DATA_ANALYSIS/MY_PROJECTS/SQL/SQL_PROJECTS/Data_Wrangling/Raw_Data/Unicorn_Companies.csv' WITH (FORMAT CSV, HEADER true)
 
 
-SELECT * FROM clean_unicorn_temp
+SELECT * FROM clean_unicorn
 
+
+--NO 1
 --Clean founded_year column
--- Step 1: Replace "none" values with NULL
+SELECT founded_year FROM clean_unicorn WHERE NOT (founded_year LIKE '19%' OR founded_year LIKE '20%');
+
+-- Step 1: Replace "none" values with null before converting the data type to integer
 UPDATE clean_unicorn
-SET founded_year = 0
+SET founded_year = null
 WHERE founded_year = 'None';
 
 -- Step 2: Alter the data type of the founded_year column to DATE
 ALTER TABLE clean_unicorn
 ALTER COLUMN founded_year TYPE int USING (NULLIF(founded_year, '')::int);
 
-
+--NO 2
 --clean valuation column
 UPDATE clean_unicorn
-SET Valuation = REPLACE(Valuation, '$', '')
-WHERE Valuation LIKE '%$%';
---change data type
-ALTER TABLE clean_unicorn
-ALTER COLUMN Valuation_$B TYPE float USING (NULLIF(Valuation_$B, '')::float);
+SET Valuation_B$ = REPLACE(Valuation_B$, '$', '')
+WHERE Valuation_B$ LIKE '%$%';
 
+--change data type (and convert it to proper value of billion)
+ALTER TABLE clean_unicorn
+ALTER COLUMN Valuation_B$ TYPE float USING (NULLIF(Valuation_B$, '')::float) --* 1000000000;
+
+
+--NO 3
 --Clean date joined column
 UPDATE clean_unicorn
 SET Date_joined = TO_CHAR(TO_DATE(Date_joined, 'MM/DD/YYYY'), 'YYYY-MM-DD');
@@ -44,14 +51,16 @@ SET Date_joined = TO_CHAR(TO_DATE(Date_joined, 'MM/DD/YYYY'), 'YYYY-MM-DD');
 ALTER TABLE clean_unicorn
 ALTER COLUMN Date_joined TYPE date USING (NULLIF(Date_joined, '')::date);
 
+
+--NO 4
 --CLEAN total_raised column
--- FIRST add another column
-ALTER TABLE clean_unicorn ADD Cleaned_Total_Raised DECIMAL(18, 2);
--- SECOND remove $ symbol
+select Total_Raised from clean_unicorn
+
+-- FIRST remove $ symbol
 UPDATE clean_unicorn
 SET Total_Raised = REPLACE(Total_Raised, '$', '')
 WHERE Total_Raised LIKE '%$%';
---THIRD convert to million and billion
+--SECOND convert to million and billion
 UPDATE clean_unicorn
 SET Cleaned_Total_Raised =
     CASE
@@ -59,9 +68,9 @@ SET Cleaned_Total_Raised =
         WHEN Total_Raised LIKE '%B' THEN CAST(REPLACE(Total_Raised, 'B', '') AS DECIMAL) * 1000000000
         WHEN Total_Raised LIKE '%M' THEN CAST(REPLACE(Total_Raised, 'M', '') AS DECIMAL) * 1000000
 		END;
---FOURTH drop column total_raised and change the column name 'Cleaned_Total_Raised' back to total_raised
-ALTER TABLE clean_unicorn drop column Total_Raised;
-ALTER TABLE clean_unicorn rename column Cleaned_Total_Raised TO Total_Raised;
+--THIRD CHANGE THE DATA TYPE FRO VARCHAR TO NUMERIC
+ALTER TABLE clean_unicorn
+ALTER COLUMN Total_Raised TYPE NUMERIC  USING (NULLIF(Total_Raised, '')::NUMERIC);
 
 
 
