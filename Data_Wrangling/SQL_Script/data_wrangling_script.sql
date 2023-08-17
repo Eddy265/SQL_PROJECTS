@@ -16,14 +16,13 @@ CREATE TABLE clean_unicorn (Company varchar (100),
 COPY clean_unicorn FROM 'C:/Users/euzoe/OneDrive/Desktop/DATA_ANALYSIS/MY_PROJECTS/SQL/SQL_PROJECTS/Data_Wrangling/Raw_Data/Unicorn_Companies.csv' WITH (FORMAT CSV, HEADER true)
 
 
-SELECT * FROM clean_unicorn
+SELECT * FROM clean_unicorn where company = 'Weilong'
 
+SELECT founded_year FROM clean_unicorn WHERE NOT (founded_year LIKE '19%' or founded_year LIKE '20%');
 
 --NO 1
 --Clean founded_year column
-SELECT founded_year FROM clean_unicorn WHERE NOT (founded_year LIKE '19%' OR founded_year LIKE '20%');
-
--- Step 1: Replace "none" values with null before converting the data type to integer
+-- Step 1: Replace "none" values with NULL
 UPDATE clean_unicorn
 SET founded_year = null
 WHERE founded_year = 'None';
@@ -35,13 +34,12 @@ ALTER COLUMN founded_year TYPE int USING (NULLIF(founded_year, '')::int);
 --NO 2
 --clean valuation column
 UPDATE clean_unicorn
-SET Valuation_B$ = REPLACE(Valuation_B$, '$', '')
-WHERE Valuation_B$ LIKE '%$%';
+SET Valuation_b$ = REPLACE(Valuation_B$, '$', '')
+WHERE Valuation_b$ LIKE '%$%';
 
 --change data type (and convert it to proper value of billion)
 ALTER TABLE clean_unicorn
-ALTER COLUMN Valuation_B$ TYPE float USING (NULLIF(Valuation_B$, '')::float) --* 1000000000;
-
+ALTER COLUMN Valuation_B$ TYPE float USING (NULLIF(Valuation_B$, '')::float)  --* 1000000000;
 
 --NO 3
 --Clean date joined column
@@ -51,27 +49,31 @@ SET Date_joined = TO_CHAR(TO_DATE(Date_joined, 'MM/DD/YYYY'), 'YYYY-MM-DD');
 ALTER TABLE clean_unicorn
 ALTER COLUMN Date_joined TYPE date USING (NULLIF(Date_joined, '')::date);
 
-
 --NO 4
 --CLEAN total_raised column
-select Total_Raised from clean_unicorn
+select * from clean_unicorn
 
--- FIRST remove $ symbol
+
+-- SECOND remove $ symbol
 UPDATE clean_unicorn
 SET Total_Raised = REPLACE(Total_Raised, '$', '')
 WHERE Total_Raised LIKE '%$%';
---SECOND convert to million and billion
+
+
+select * from clean_unicorn where Total_Raised = 'None'
+
+--THIRD convert to million and billion
 UPDATE clean_unicorn
-SET Cleaned_Total_Raised =
+SET Total_Raised =
     CASE
         WHEN Total_Raised = 'None' THEN NULL
         WHEN Total_Raised LIKE '%B' THEN CAST(REPLACE(Total_Raised, 'B', '') AS DECIMAL) * 1000000000
         WHEN Total_Raised LIKE '%M' THEN CAST(REPLACE(Total_Raised, 'M', '') AS DECIMAL) * 1000000
 		END;
---THIRD CHANGE THE DATA TYPE FRO VARCHAR TO NUMERIC
-ALTER TABLE clean_unicorn
-ALTER COLUMN Total_Raised TYPE NUMERIC  USING (NULLIF(Total_Raised, '')::NUMERIC);
 
+--FOURTH CHANGE THE DATA TYPE TO NUMERIC
+ALTER TABLE clean_unicorn
+ALTER COLUMN Total_Raised TYPE DECIMAL  USING (NULLIF(Total_Raised, '')::DECIMAL);
 
 
 --NORMALIZE THE TABLE
@@ -98,6 +100,14 @@ SET founded_year = cu.founded_year
 FROM clean_unicorn AS cu
 WHERE c.Company = cu.Company;
 
+--add companyid to the main table; clean_unicorn
+ALTER TABLE clean_unicorn ADD CompanyID INTEGER;
+
+--and insert the ids
+UPDATE clean_unicorn AS cu
+SET CompanyID = c.CompanyID
+FROM Company AS c
+WHERE cu.Company = c.Company;
 
 --Add the column Financial_stage to the company table
 ALTER TABLE company ADD financial_stage varchar(50);
@@ -169,7 +179,7 @@ CREATE TABLE Valuation (
 
 -- Insert data from clean_unicorn and company into Valuation
 INSERT INTO Valuation (CompanyID, Valuation_$B)
-SELECT c.CompanyID, cu.Valuation_$B
+SELECT c.CompanyID, cu.Valuation_B$
 FROM Company c
 JOIN clean_unicorn cu ON c.Company = cu.Company;
 
@@ -190,14 +200,6 @@ CREATE TABLE Investor (
     CompanyID INTEGER REFERENCES Company(CompanyID)
 );
 
---add companyid to the main table; clean_unicorn
-ALTER TABLE clean_unicorn ADD CompanyID INTEGER;
-
---and insert the ids
-UPDATE clean_unicorn AS cu
-SET CompanyID = c.CompanyID
-FROM Company AS c
-WHERE cu.Company = c.Company;
 
 -- Insert data into Investor (InvestorName, CompanyID)
 INSERT INTO Investor (InvestorName, CompanyID)
@@ -223,13 +225,3 @@ WHERE industry IS NOT NULL;
 UPDATE industry
 SET industry = REPLACE(industry, '& ', '')
 WHERE industry LIKE '&%';
-
-
-
-
-
-
-
-
-
-
